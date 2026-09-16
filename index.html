@@ -3003,7 +3003,7 @@
     });
 
     /* =====================================================================
-       📷 MAPA DE FOTOS — agora TODAS na raiz (sem pasta)
+       📷 MAPA DE FOTOS — todas na raiz do repositório (sem pasta)
        ===================================================================== */
     const PRODUCT_IMAGES = {
       /* Mobiliário */
@@ -3431,4 +3431,787 @@
         return `<li>${item.name} × ${entry.qty}</li>`;
       }).join('');
       document.getElementById('kitDetailList').innerHTML = listHtml;
-      document.getElementById('kit
+      document.getElementById('kitDetailPriceRow').innerHTML = `
+    <span class="price">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+    ${hasConsulta ? '<span class="price-old" style="text-decoration:none;">+ itens sob consulta</span>' : ''}
+  `;
+      const kitAddBtn = document.getElementById('kitDetailAddBtn');
+      kitAddBtn.textContent = 'Adicionar kit ao meu evento';
+      kitAddBtn.onclick = () => {
+        kit.items.forEach(entry => {
+          const item = CATALOG_FLAT[entry.id];
+          if (!item) return;
+          cart[entry.id] = { name: item.name, category: item.category, qty: entry.qty, price: item.price };
+        });
+        renderCart();
+        showToast(`${kit.name} adicionado ao seu evento!`);
+        closeStackedModal(kitDetailOverlay);
+        closeKitsModal();
+        openOrderModal();
+      };
+      openStackedModal(kitDetailOverlay);
+    }
+
+    /* ---------------- RENDER CATALOG ---------------- */
+    const productList = document.getElementById('productList');
+    CATALOG.forEach((group, gi) => {
+      const label = document.createElement('div');
+      label.className = 'course-label';
+      label.innerHTML = `<span class="num">${ROMAN[gi] || (gi + 1)}</span><span class="cl-icon">${ICONS[group.category] || ''}</span><h3>${group.category}</h3><span class="ln"></span>`;
+      productList.appendChild(label);
+
+      const grid = document.createElement('div');
+      grid.className = 'grid-products';
+
+      group.items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        const priceHtml = item.price == null
+          ? `<span class="price consulta">Sob consulta</span>`
+          : `${item.priceOld ? `<span class="price-old">R$ ${item.priceOld.toFixed(2).replace('.', ',')}</span>` : ''}<span class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>`;
+        const imgFile = productImgFile(item.id);
+        card.innerHTML = `
+      <div class="card-img">
+        <img class="img-slot-photo" src="${imgFile}" alt="${item.name}" loading="lazy"
+             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none';">
+        <div class="img-slot-fallback">
+          ${ICONS[group.category] || ''}
+          <span class="img-slot-tag">📷 ${imgFile}</span>
+        </div>
+      </div>
+      <div class="card-top">
+        <h4>${item.name}</h4>
+        <span class="tag">Locação</span>
+      </div>
+      <p>${item.desc}</p>
+      ${item.note ? `<p class="note">${item.note}</p>` : ''}
+      <div class="price-row">${priceHtml}</div>
+      <div class="card-foot">
+        <div class="stepper">
+          <button type="button" class="dec" aria-label="Diminuir">–</button>
+          <input type="number" min="1" value="1" aria-label="Quantidade">
+          <button type="button" class="inc" aria-label="Aumentar">+</button>
+        </div>
+        <button type="button" class="add-btn">Adicionar</button>
+      </div>
+    `;
+        const qtyInput = card.querySelector('input');
+        card.querySelector('.dec').addEventListener('click', () => {
+          qtyInput.value = Math.max(1, parseInt(qtyInput.value || 1) - 1);
+        });
+        card.querySelector('.inc').addEventListener('click', () => {
+          qtyInput.value = parseInt(qtyInput.value || 1) + 1;
+        });
+        const addBtn = card.querySelector('.add-btn');
+        addBtn.addEventListener('click', () => {
+          const qty = Math.max(1, parseInt(qtyInput.value || 1));
+          cart[item.id] = { name: item.name, category: group.category, qty, price: item.price };
+          renderCart();
+          showToast(`${item.name} adicionado ao seu evento`);
+          addBtn.textContent = 'Adicionado ✓';
+          addBtn.classList.add('added');
+          setTimeout(() => { addBtn.textContent = 'Adicionar'; addBtn.classList.remove('added'); }, 1400);
+        });
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.card-foot')) return;
+          openItemDetail(item, group.category);
+        });
+        grid.appendChild(card);
+      });
+      productList.appendChild(grid);
+    });
+
+    /* teaser icon row */
+    const teaserIcons = document.getElementById('teaserIcons');
+    CATALOG.forEach(group => {
+      const el = document.createElement('div');
+      el.className = 'ti';
+      el.title = group.category;
+      el.innerHTML = ICONS[group.category] || '';
+      teaserIcons.appendChild(el);
+    });
+
+    /* ---------------- GALERIA ---------------- */
+    const GALLERY_ICON_BDAY = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14 30 h36 v20 a2 2 0 0 1-2 2 H16 a2 2 0 0 1-2-2 Z" />
+  <path d="M14 38 q4 -4 8 0 q4 4 8 0 q4 -4 8 0 q4 4 8 0" />
+  <line x1="32" y1="30" x2="32" y2="16" />
+  <path d="M28 12 q4 -6 8 0 q-4 2 -4 6 q0 -4 -4 -6Z" />
+</svg>`;
+    const GALLERY_ICON_WEDDING = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="24" cy="36" r="10" />
+  <circle cx="40" cy="36" r="10" />
+</svg>`;
+    const GALLERY_ICON_GRAD = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 24 L32 14 L58 24 L32 34 Z" />
+  <path d="M18 29 v12 q14 8 28 0 v-12" />
+  <line x1="58" y1="24" x2="58" y2="40" />
+</svg>`;
+    const GALLERY_ICON_CORP = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="12" y="20" width="40" height="30" rx="2" />
+  <line x1="12" y1="30" x2="52" y2="30" />
+  <line x1="26" y1="20" x2="26" y2="14" />
+  <line x1="38" y1="20" x2="38" y2="14" />
+</svg>`;
+    const GALLERY_ICON_TOAST = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 12 L22 34 Q22 40 28 40 Q34 40 34 34 L40 12 Z" />
+  <line x1="28" y1="40" x2="28" y2="50" />
+  <line x1="20" y1="50" x2="36" y2="50" />
+  <path d="M44 20 L48 38 Q48 43 53 43 Q58 43 58 38 L58 20 Z" />
+  <line x1="53" y1="43" x2="53" y2="50" />
+</svg>`;
+
+    const GALLERY_ITEMS = [
+      { slug: "aniversarios", label: "Aniversários", desc: "Momentos especiais registrados nos eventos que montamos.", icon: GALLERY_ICON_BDAY },
+      { slug: "casamentos", label: "Casamentos", desc: "Mesas e detalhes que fizeram parte de casamentos por aqui.", icon: GALLERY_ICON_WEDDING },
+      { slug: "cha-revelacao", label: "Chá revelação", desc: "Decoração e estrutura para um chá revelação inesquecível.", icon: ICONS["Chá revelação"] },
+      { slug: "formaturas", label: "Formaturas", desc: "Jantares e celebrações de formatura montados pela JD.", icon: GALLERY_ICON_GRAD },
+      { slug: "corporativo", label: "Eventos corporativos", desc: "Confraternizações e eventos de empresas atendidos pela JD.", icon: GALLERY_ICON_CORP },
+      { slug: "confraternizacoes", label: "Confraternizações", desc: "Encontros entre amigos e famílias que passaram por aqui.", icon: GALLERY_ICON_TOAST },
+    ];
+
+    const galleryGrid = document.getElementById('galleryGrid');
+    GALLERY_ITEMS.forEach(g => {
+      const imgFile = GALLERY_IMAGES[g.slug] || `galeria-${g.slug}.jpg`;
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+      card.innerHTML = `
+    <div class="gallery-photo">
+      <img class="img-slot-photo" src="${imgFile}" alt="${g.label} — JD Eventos" loading="lazy"
+           onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+           onerror="this.style.display='none';">
+      <div class="img-slot-fallback">
+        ${g.icon}
+        <span class="img-slot-tag">📷 ${imgFile}</span>
+      </div>
+    </div>
+    <div class="gallery-cap">
+      <h4>${g.label}</h4>
+      <p>${g.desc}</p>
+    </div>
+  `;
+      galleryGrid.appendChild(card);
+    });
+
+    /* ---------------- CART ---------------- */
+    const selItems = document.getElementById('selItems');
+    const cartCount = document.getElementById('cartCount');
+    const catalogFootCount = document.getElementById('catalogFootCount');
+    const teaserCartCount = document.getElementById('teaserCartCount');
+
+    function renderCart() {
+      const ids = Object.keys(cart);
+      const totalQty = ids.reduce((sum, id) => sum + cart[id].qty, 0);
+      cartCount.textContent = totalQty;
+      catalogFootCount.textContent = totalQty;
+      teaserCartCount.textContent = totalQty;
+
+      if (ids.length === 0) {
+        selItems.innerHTML = '<p class="empty-msg">Sua lista está vazia. Adicione itens do catálogo para começar.</p>';
+      } else {
+        selItems.innerHTML = '';
+        ids.forEach(id => {
+          const it = cart[id];
+          const row = document.createElement('div');
+          row.className = 'sel-item';
+          const priceLabel = it.price == null ? 'sob consulta' : `R$ ${(it.price * it.qty).toFixed(2).replace('.', ',')}`;
+          row.innerHTML = `
+        <div>
+          <div class="di-cat">${it.category}</div>
+          <div class="di-name">${it.name} × ${it.qty} <span style="color:var(--tinta-suave);font-weight:400;">— ${priceLabel}</span></div>
+          <button class="di-remove" data-id="${id}">remover</button>
+        </div>
+      `;
+          selItems.appendChild(row);
+        });
+        selItems.querySelectorAll('.di-remove').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            delete cart[e.target.dataset.id];
+            renderCart();
+          });
+        });
+      }
+      renderInvitePreview();
+    }
+
+    /* ---------------- MODALS ---------------- */
+    const catalogOverlay = document.getElementById('catalogOverlay');
+    const orderOverlay = document.getElementById('orderOverlay');
+    const calcOverlay = document.getElementById('calcOverlay');
+    const kitsOverlay = document.getElementById('kitsOverlay');
+    const itemDetailOverlay = document.getElementById('itemDetailOverlay');
+    const kitDetailOverlay = document.getElementById('kitDetailOverlay');
+
+    function openModal(overlayEl) {
+      [catalogOverlay, orderOverlay, authOverlay, ordersOverlay, calcOverlay, kitsOverlay, itemDetailOverlay, kitDetailOverlay].forEach(o => o.classList.remove('open'));
+      overlayEl.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(overlayEl) {
+      overlayEl.classList.remove('open');
+      const anyOpen = [catalogOverlay, orderOverlay, authOverlay, ordersOverlay, calcOverlay, kitsOverlay, itemDetailOverlay, kitDetailOverlay].some(o => o.classList.contains('open'));
+      if (!anyOpen) {
+        document.body.style.overflow = '';
+      }
+    }
+    function openStackedModal(overlayEl) {
+      overlayEl.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeStackedModal(overlayEl) {
+      overlayEl.classList.remove('open');
+    }
+    function openCatalogModal() { openModal(catalogOverlay); }
+    function closeCatalogModal() { closeModal(catalogOverlay); }
+    function openOrderModal() { openModal(orderOverlay); renderInvitePreview(); renderOrderAccountArea(); }
+    function closeOrderModal() { closeModal(orderOverlay); }
+    function openCalcModal() { openModal(calcOverlay); }
+    function closeCalcModal() { closeModal(calcOverlay); }
+    function openKitsModal() { openModal(kitsOverlay); }
+    function closeKitsModal() { closeModal(kitsOverlay); }
+
+    document.getElementById('heroCatalogo').addEventListener('click', openCatalogModal);
+    document.getElementById('navCatalogo').addEventListener('click', openCatalogModal);
+    document.getElementById('openCatalogBtn').addEventListener('click', openCatalogModal);
+    document.getElementById('catalogCloseBtn').addEventListener('click', closeCatalogModal);
+    catalogOverlay.addEventListener('click', (e) => { if (e.target === catalogOverlay) closeCatalogModal(); });
+
+    document.getElementById('heroPedido').addEventListener('click', openOrderModal);
+    document.getElementById('navPedido').addEventListener('click', openOrderModal);
+    document.getElementById('openOrderBtn').addEventListener('click', openOrderModal);
+    document.getElementById('cartOpenBtn').addEventListener('click', openOrderModal);
+    document.getElementById('orderCloseBtn').addEventListener('click', closeOrderModal);
+    orderOverlay.addEventListener('click', (e) => { if (e.target === orderOverlay) closeOrderModal(); });
+
+    document.getElementById('navCalc').addEventListener('click', openCalcModal);
+    document.getElementById('openCalcBtn').addEventListener('click', openCalcModal);
+    document.getElementById('calcCloseBtn').addEventListener('click', closeCalcModal);
+    calcOverlay.addEventListener('click', (e) => { if (e.target === calcOverlay) closeCalcModal(); });
+
+    document.getElementById('navKits').addEventListener('click', openKitsModal);
+    document.getElementById('openKitsBtn').addEventListener('click', openKitsModal);
+    document.getElementById('kitsCloseBtn').addEventListener('click', closeKitsModal);
+    kitsOverlay.addEventListener('click', (e) => { if (e.target === kitsOverlay) closeKitsModal(); });
+
+    document.getElementById('detailCloseBtn').addEventListener('click', () => closeStackedModal(itemDetailOverlay));
+    itemDetailOverlay.addEventListener('click', (e) => { if (e.target === itemDetailOverlay) closeStackedModal(itemDetailOverlay); });
+
+    document.getElementById('kitDetailCloseBtn').addEventListener('click', () => closeStackedModal(kitDetailOverlay));
+    kitDetailOverlay.addEventListener('click', (e) => { if (e.target === kitDetailOverlay) closeStackedModal(kitDetailOverlay); });
+
+    document.getElementById('catalogToOrderBtn').addEventListener('click', () => { closeCatalogModal(); openOrderModal(); });
+    document.getElementById('addMoreBtn').addEventListener('click', () => { closeOrderModal(); openCatalogModal(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (itemDetailOverlay.classList.contains('open')) { closeStackedModal(itemDetailOverlay); return; }
+        if (kitDetailOverlay.classList.contains('open')) { closeStackedModal(kitDetailOverlay); return; }
+        if (catalogOverlay.classList.contains('open')) closeCatalogModal();
+        if (orderOverlay.classList.contains('open')) closeOrderModal();
+        if (authOverlay.classList.contains('open')) closeAuthModal();
+        if (ordersOverlay.classList.contains('open')) closeModal(ordersOverlay);
+        if (calcOverlay.classList.contains('open')) closeCalcModal();
+        if (kitsOverlay.classList.contains('open')) closeKitsModal();
+        if (navDropdown.classList.contains('open')) toggleNavMenu(false);
+      }
+    });
+
+    /* ---------------- KITS PRONTOS ---------------- */
+    const KITS = [
+      {
+        id: "kit-aniversario-30",
+        name: "Kit Aniversário — até 30 convidados",
+        tag: "Aniversário",
+        desc: "Cadeiras, mesas, toalha, louças e copos para uma festa de aniversário simples.",
+        items: [
+          { id: "cad-plastico", qty: 30 },
+          { id: "tampo-6pessoas", qty: 4 },
+          { id: "suporte-tampo", qty: 4 },
+          { id: "toalha-lisa", qty: 4 },
+          { id: "prato-mesa", qty: 30 },
+          { id: "prato-sobremesa", qty: 30 },
+          { id: "talheres", qty: 30 },
+          { id: "guardanapos", qty: 30 },
+          { id: "copo-cylinder", qty: 30 },
+        ]
+      },
+      {
+        id: "kit-aniversario-50",
+        name: "Kit Aniversário — até 50 convidados",
+        tag: "Aniversário",
+        desc: "A mesma estrutura do kit menor, em maior quantidade, com balde de gelo e bandeja de garçom.",
+        items: [
+          { id: "cad-plastico", qty: 50 },
+          { id: "tampo-6pessoas", qty: 7 },
+          { id: "suporte-tampo", qty: 7 },
+          { id: "toalha-jacquard", qty: 7 },
+          { id: "prato-mesa", qty: 50 },
+          { id: "prato-sobremesa", qty: 50 },
+          { id: "talheres", qty: 50 },
+          { id: "guardanapos", qty: 50 },
+          { id: "copo-cylinder", qty: 50 },
+          { id: "balde-gelo", qty: 2 },
+          { id: "bandeja-garcom", qty: 2 },
+        ]
+      },
+      {
+        id: "kit-casamento-80",
+        name: "Kit Casamento — até 80 convidados",
+        tag: "Casamento",
+        desc: "Um combo mais completo, com cadeira de ferro, louça trabalhada e taças.",
+        items: [
+          { id: "cad-ferro", qty: 80 },
+          { id: "tampo-6pessoas", qty: 10 },
+          { id: "suporte-tampo", qty: 10 },
+          { id: "toalha-jacquard", qty: 10 },
+          { id: "capa-cadeira", qty: 80 },
+          { id: "prato-trabalhado", qty: 80 },
+          { id: "prato-sobremesa", qty: 80 },
+          { id: "talheres", qty: 80 },
+          { id: "guardanapos", qty: 80 },
+          { id: "taca-paulista", qty: 80 },
+          { id: "suqueira-3l", qty: 4 },
+          { id: "bandeja-garcom", qty: 3 },
+        ]
+      },
+      {
+        id: "kit-cha-revelacao",
+        name: "Kit Chá Revelação",
+        tag: "Chá revelação",
+        desc: "Estrutura para um chá revelação com até 20 convidados, incluindo o lança papel.",
+        items: [
+          { id: "cad-plastico", qty: 20 },
+          { id: "toalha-redonda", qty: 3 },
+          { id: "prato-sobremesa", qty: 20 },
+          { id: "talheres", qty: 20 },
+          { id: "guardanapos", qty: 20 },
+          { id: "copo-cylinder", qty: 20 },
+          { id: "suqueira-3l", qty: 2 },
+          { id: "boleira-lirio", qty: 1 },
+          { id: "lanca-papel", qty: 1 },
+        ]
+      },
+      {
+        id: "kit-casamento-40",
+        name: "Kit Casamento Simples — até 40 convidados",
+        tag: "Casamento",
+        desc: "Uma versão mais enxuta do kit de casamento, para cerimônias menores.",
+        items: [
+          { id: "cad-ferro", qty: 40 },
+          { id: "tampo-6pessoas", qty: 5 },
+          { id: "suporte-tampo", qty: 5 },
+          { id: "toalha-jacquard", qty: 5 },
+          { id: "capa-cadeira", qty: 40 },
+          { id: "prato-trabalhado", qty: 40 },
+          { id: "prato-sobremesa", qty: 40 },
+          { id: "talheres", qty: 40 },
+          { id: "guardanapos", qty: 40 },
+          { id: "taca-paulista", qty: 40 },
+          { id: "suqueira-3l", qty: 2 },
+        ]
+      },
+      {
+        id: "kit-formatura-60",
+        name: "Kit Formatura — até 60 convidados",
+        tag: "Formatura",
+        desc: "Jantar de formatura com cadeira de ferro, louça trabalhada e taças.",
+        items: [
+          { id: "cad-ferro", qty: 60 },
+          { id: "tampo-6pessoas", qty: 8 },
+          { id: "suporte-tampo", qty: 8 },
+          { id: "toalha-jacquard", qty: 8 },
+          { id: "prato-trabalhado", qty: 60 },
+          { id: "prato-sobremesa", qty: 60 },
+          { id: "talheres", qty: 60 },
+          { id: "guardanapos", qty: 60 },
+          { id: "taca-diamante", qty: 60 },
+          { id: "suqueira-5l", qty: 2 },
+          { id: "bandeja-garcom", qty: 2 },
+        ]
+      },
+      {
+        id: "kit-corporativo-40",
+        name: "Kit Confraternização Corporativa — até 40 pessoas",
+        tag: "Evento corporativo",
+        desc: "Formato coquetel, com mesas de apoio, réchaud e copos para brinde.",
+        items: [
+          { id: "mesa-pranchao", qty: 3 },
+          { id: "toalha-pranchao", qty: 3 },
+          { id: "copo-coquetel", qty: 40 },
+          { id: "taca-gallant", qty: 40 },
+          { id: "prato-sobremesa", qty: 40 },
+          { id: "guardanapos", qty: 40 },
+          { id: "rechaud-mesa", qty: 2 },
+          { id: "balde-gelo", qty: 2 },
+          { id: "garrafa-19", qty: 2 },
+        ]
+      },
+      {
+        id: "kit-aniversario-infantil-25",
+        name: "Kit Aniversário Infantil — até 25 crianças",
+        tag: "Aniversário infantil",
+        desc: "Mesa de doces e estrutura leve para uma festa infantil colorida.",
+        items: [
+          { id: "cad-plastico", qty: 25 },
+          { id: "toalha-colorida", qty: 3 },
+          { id: "prato-sobremesa", qty: 25 },
+          { id: "guardanapos", qty: 25 },
+          { id: "copo-coquetel", qty: 25 },
+          { id: "boleira-doceira-escada", qty: 1 },
+          { id: "bandeja-doces-acrilico", qty: 2 },
+          { id: "travessa-oval", qty: 2 },
+        ]
+      },
+    ];
+
+    const KIT_ICON_MAP = {
+      "Aniversário": GALLERY_ICON_BDAY,
+      "Aniversário infantil": GALLERY_ICON_BDAY,
+      "Casamento": GALLERY_ICON_WEDDING,
+      "Chá revelação": ICONS["Chá revelação"],
+      "Formatura": GALLERY_ICON_GRAD,
+      "Evento corporativo": GALLERY_ICON_CORP,
+    };
+
+    const kitsGrid = document.getElementById('kitsGrid');
+    KITS.forEach(kit => {
+      let subtotal = 0;
+      let hasConsulta = false;
+      kit.items.forEach(entry => {
+        const item = CATALOG_FLAT[entry.id];
+        if (!item) return;
+        if (item.price == null) hasConsulta = true; else subtotal += item.price * entry.qty;
+      });
+      const card = document.createElement('div');
+      card.className = 'kit-card';
+      const itemsListHtml = kit.items.map(entry => {
+        const item = CATALOG_FLAT[entry.id];
+        return item ? `<li>${item.name} × ${entry.qty}</li>` : '';
+      }).join('');
+      card.innerHTML = `
+    <div class="kit-img">
+      <img class="img-slot-photo" src="${kit.id}.jpg" alt="${kit.name}" loading="lazy"
+           onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+           onerror="this.style.display='none';">
+      <div class="img-slot-fallback">
+        ${KIT_ICON_MAP[kit.tag] || ''}
+        <span class="img-slot-tag">📷 ${kit.id}.jpg</span>
+      </div>
+    </div>
+    <span class="kit-tag">${kit.tag}</span>
+    <h4>${kit.name}</h4>
+    <p class="kit-desc">${kit.desc}</p>
+    <details>
+      <summary style="cursor:pointer;font-size:12.5px;color:var(--verde);">Ver itens do kit (${kit.items.length})</summary>
+      <ul style="margin:10px 0 0;padding-left:18px;font-size:12.5px;color:var(--tinta-suave);line-height:1.7;">${itemsListHtml}</ul>
+    </details>
+    <div class="price-row">
+      <span class="price">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+      ${hasConsulta ? '<span class="price-old" style="text-decoration:none;">+ itens sob consulta</span>' : ''}
+    </div>
+    <button type="button" class="btn btn-verde add-kit-btn" style="justify-content:center;">Adicionar kit ao meu evento</button>
+  `;
+      card.querySelector('.add-kit-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        kit.items.forEach(entry => {
+          const item = CATALOG_FLAT[entry.id];
+          if (!item) return;
+          cart[entry.id] = { name: item.name, category: item.category, qty: entry.qty, price: item.price };
+        });
+        renderCart();
+        showToast(`${kit.name} adicionado ao seu evento!`);
+        closeKitsModal();
+        openOrderModal();
+      });
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.add-kit-btn') || e.target.closest('details')) return;
+        openKitDetail(kit);
+      });
+      kitsGrid.appendChild(card);
+    });
+
+    /* ---------------- CALCULADORA ---------------- */
+    const CALC_ITEMS = [
+      { id: "cad-plastico", perGuests: 1 },
+      { id: "tampo-6pessoas", perGuests: 8 },
+      { id: "suporte-tampo", perGuests: 8 },
+      { id: "toalha-lisa", perGuests: 8 },
+      { id: "prato-mesa", perGuests: 1 },
+      { id: "prato-sobremesa", perGuests: 1 },
+      { id: "talheres", perGuests: 1 },
+      { id: "guardanapos", perGuests: 1 },
+      { id: "copo-cylinder", perGuests: 1 },
+      { id: "balde-gelo", perGuests: 25 },
+      { id: "suqueira-3l", perGuests: 20 },
+      { id: "bandeja-garcom", perGuests: 30 },
+    ];
+
+    const calcResultsWrap = document.getElementById('calcResultsWrap');
+    const calcResults = document.getElementById('calcResults');
+
+    function runCalc() {
+      const guests = parseInt(document.getElementById('calc-convidados').value || 0);
+      if (!guests || guests < 1) {
+        showToast('Informe o número de convidados para calcular.');
+        return;
+      }
+      calcResults.innerHTML = '';
+      CALC_ITEMS.forEach(entry => {
+        const item = CATALOG_FLAT[entry.id];
+        if (!item) return;
+        const suggestedQty = Math.ceil(guests / entry.perGuests);
+        const row = document.createElement('div');
+        row.className = 'calc-row';
+        row.dataset.id = entry.id;
+        const priceLabel = item.price == null ? 'sob consulta' : `R$ ${item.price.toFixed(2).replace('.', ',')}/un.`;
+        row.innerHTML = `
+      <div>
+        <div class="di-cat">${item.category}</div>
+        <div class="di-name">${item.name}</div>
+        <div class="calc-note">sugestão: ${suggestedQty} un. · ${priceLabel}</div>
+      </div>
+      <div class="calc-row-actions">
+        <div class="stepper">
+          <button type="button" class="dec" aria-label="Diminuir">–</button>
+          <input type="number" min="1" value="${suggestedQty}" aria-label="Quantidade">
+          <button type="button" class="inc" aria-label="Aumentar">+</button>
+        </div>
+        <button type="button" class="add-btn">Adicionar</button>
+      </div>
+    `;
+        const qtyInput = row.querySelector('input');
+        row.querySelector('.dec').addEventListener('click', () => {
+          qtyInput.value = Math.max(1, parseInt(qtyInput.value || 1) - 1);
+        });
+        row.querySelector('.inc').addEventListener('click', () => {
+          qtyInput.value = parseInt(qtyInput.value || 1) + 1;
+        });
+        row.querySelector('.add-btn').addEventListener('click', (e) => {
+          const qty = Math.max(1, parseInt(qtyInput.value || 1));
+          cart[entry.id] = { name: item.name, category: item.category, qty, price: item.price };
+          renderCart();
+          showToast(`${item.name} adicionado ao seu evento`);
+          row.classList.add('added');
+          e.target.textContent = 'Adicionado ✓';
+          setTimeout(() => { e.target.textContent = 'Adicionar'; row.classList.remove('added'); }, 1400);
+        });
+        calcResults.appendChild(row);
+      });
+      calcResultsWrap.style.display = 'block';
+    }
+
+    document.getElementById('calcRunBtn').addEventListener('click', runCalc);
+    document.getElementById('calc-convidados').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); runCalc(); }
+    });
+
+    document.getElementById('calcAddAllBtn').addEventListener('click', () => {
+      const rows = calcResults.querySelectorAll('.calc-row');
+      if (rows.length === 0) {
+        showToast('Calcule a sugestão primeiro.');
+        return;
+      }
+      rows.forEach(row => {
+        const id = row.dataset.id;
+        const item = CATALOG_FLAT[id];
+        const qty = Math.max(1, parseInt(row.querySelector('input').value || 1));
+        cart[id] = { name: item.name, category: item.category, qty, price: item.price };
+      });
+      renderCart();
+      showToast('Itens sugeridos adicionados ao seu evento!');
+      closeCalcModal();
+      openOrderModal();
+    });
+
+    let toastTimer;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 5000);
+    }
+
+    /* ---------------- INVITE PREVIEW ---------------- */
+    const pvNome = document.getElementById('pvNome');
+    const pvDetalhes = document.getElementById('pvDetalhes');
+    const pvList = document.getElementById('pvList');
+    const pvTotal = document.getElementById('pvTotal');
+    const pvTotalCount = document.getElementById('pvTotalCount');
+    const pvSubtotal = document.getElementById('pvSubtotal');
+    const pvSubtotalValue = document.getElementById('pvSubtotalValue');
+
+    function renderInvitePreview() {
+      const nome = document.getElementById('f-nome').value.trim();
+      const data = document.getElementById('f-data').value;
+      const convidados = document.getElementById('f-convidados').value;
+      const endereco = document.getElementById('f-endereco').value.trim();
+
+      pvNome.textContent = nome ? `Evento de ${nome}` : 'Seu nome aqui';
+
+      const detalhesParts = [];
+      if (data) {
+        const d = new Date(data + 'T00:00:00');
+        detalhesParts.push(d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }));
+      }
+      if (convidados) detalhesParts.push(`${convidados} convidados`);
+      if (endereco) detalhesParts.push(endereco);
+      pvDetalhes.textContent = detalhesParts.length ? detalhesParts.join(' · ') : 'Data · convidados · endereço';
+
+      const ids = Object.keys(cart);
+      if (ids.length === 0) {
+        pvList.innerHTML = '<li class="invite-empty" style="list-style:none;">Nenhum item selecionado ainda. Volte ao catálogo e escolha os itens do seu evento.</li>';
+        pvTotal.style.display = 'none';
+        pvSubtotal.style.display = 'none';
+      } else {
+        pvList.innerHTML = '';
+        let totalItens = 0;
+        let subtotal = 0;
+        let hasConsulta = false;
+        ids.forEach(id => {
+          const it = cart[id];
+          totalItens += it.qty;
+          const li = document.createElement('li');
+          if (it.price == null) {
+            hasConsulta = true;
+            li.innerHTML = `<span>${it.name}</span><span>× ${it.qty} (sob consulta)</span>`;
+          } else {
+            subtotal += it.price * it.qty;
+            li.innerHTML = `<span>${it.name}</span><span>× ${it.qty}</span>`;
+          }
+          pvList.appendChild(li);
+        });
+        pvTotal.style.display = 'flex';
+        pvTotalCount.textContent = totalItens;
+        pvSubtotal.style.display = 'flex';
+        pvSubtotalValue.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}${hasConsulta ? ' + itens sob consulta' : ''}`;
+      }
+    }
+    ['f-nome', 'f-data', 'f-convidados', 'f-endereco'].forEach(id => {
+      document.getElementById(id).addEventListener('input', renderInvitePreview);
+    });
+
+    /* ---------------- ORDER SUMMARY TEXT ---------------- */
+    function buildSummaryText() {
+      const nome = document.getElementById('f-nome').value.trim();
+      const telefone = document.getElementById('f-telefone').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const tipo = document.getElementById('f-tipo').value;
+      const convidados = document.getElementById('f-convidados').value;
+      const data = document.getElementById('f-data').value;
+      const horario = document.getElementById('f-horario').value;
+      const endereco = document.getElementById('f-endereco').value.trim();
+      const obs = document.getElementById('f-obs').value.trim();
+
+      let dataFmt = data;
+      if (data) {
+        const d = new Date(data + 'T00:00:00');
+        dataFmt = d.toLocaleDateString('pt-BR');
+      }
+
+      let lines = [];
+      lines.push('Olá! Gostaria de solicitar um orçamento para o meu evento na JD Eventos.');
+      lines.push('');
+      lines.push(`Nome: ${nome}`);
+      lines.push(`Telefone: ${telefone}`);
+      if (email) lines.push(`E-mail: ${email}`);
+      lines.push(`Tipo de evento: ${tipo}`);
+      if (convidados) lines.push(`Nº de convidados: ${convidados}`);
+      if (data) lines.push(`Data: ${dataFmt}${horario ? ' às ' + horario : ''}`);
+      if (endereco) lines.push(`Endereço: ${endereco}`);
+      lines.push('');
+      lines.push('Itens do meu evento:');
+      const ids = Object.keys(cart);
+      let subtotal = 0;
+      let hasConsulta = false;
+      if (ids.length === 0) {
+        lines.push('- (nenhum item selecionado ainda)');
+      } else {
+        ids.forEach(id => {
+          const it = cart[id];
+          if (it.price == null) {
+            hasConsulta = true;
+            lines.push(`- ${it.name} (x${it.qty}) — sob consulta`);
+          } else {
+            subtotal += it.price * it.qty;
+            lines.push(`- ${it.name} (x${it.qty}) — R$ ${(it.price * it.qty).toFixed(2).replace('.', ',')}`);
+          }
+        });
+        lines.push('');
+        lines.push(`Subtotal aproximado: R$ ${subtotal.toFixed(2).replace('.', ',')}${hasConsulta ? ' + itens sob consulta' : ''}`);
+      }
+      if (obs) {
+        lines.push('');
+        lines.push(`Observações: ${obs}`);
+      }
+      return lines.join('\n');
+    }
+
+    /* ---------------- FORM SUBMIT ---------------- */
+    const WHATSAPP_NUMBER = "5511998187321";
+    const CONTACT_EMAIL = "jd.contatos@outlook.com";
+
+    const orderForm = document.getElementById('orderForm');
+    const confirmBox = document.getElementById('confirmBox');
+    const confirmText = document.getElementById('confirmText');
+
+    function handleSend(channel) {
+      if (!orderForm.reportValidity()) return;
+      if (!currentUser()) {
+        showToast('Faça login ou cadastre-se para concluir o pedido.');
+        openAuthModal('login');
+        return;
+      }
+      const text = buildSummaryText();
+      saveOrderToHistory();
+
+      if (channel === 'whatsapp') {
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+        confirmText.textContent = 'Abrimos o WhatsApp com o resumo do seu evento já preenchido. É só conferir e apertar enviar. Este pedido foi fechado e já está salvo em "Meus pedidos".';
+      } else {
+        const subject = encodeURIComponent('Pedido de orçamento — JD Eventos');
+        const url = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${encodeURIComponent(text)}`;
+        window.location.href = url;
+        confirmText.textContent = 'Abrimos seu aplicativo de e-mail com o resumo do seu evento já preenchido. É só conferir e enviar. Este pedido foi fechado e já está salvo em "Meus pedidos".';
+      }
+
+      cart = {};
+      renderCart();
+      document.getElementById('f-tipo').selectedIndex = 0;
+      document.getElementById('f-convidados').value = '';
+      document.getElementById('f-data').value = '';
+      document.getElementById('f-horario').value = '';
+      document.getElementById('f-endereco').value = '';
+      document.getElementById('f-obs').value = '';
+      renderInvitePreview();
+
+      orderForm.style.display = 'none';
+      confirmBox.classList.add('show');
+    }
+
+    orderForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleSend('whatsapp');
+    });
+    document.getElementById('sendEmail').addEventListener('click', () => handleSend('email'));
+    document.getElementById('viewHistoryAfterSend').addEventListener('click', () => {
+      confirmBox.classList.remove('show');
+      orderForm.style.display = 'block';
+      closeOrderModal();
+      openOrdersHistoryModal();
+    });
+    document.getElementById('newOrderAfterSend').addEventListener('click', () => {
+      confirmBox.classList.remove('show');
+      orderForm.style.display = 'block';
+      renderInvitePreview();
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderCart();
+    renderAccountState();
+  </script>
+</body>
+
+</html>
