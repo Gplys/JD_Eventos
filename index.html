@@ -3083,8 +3083,24 @@
       "confraternizacoes": "confraternizacao.jpg",
     };
 
+    /* 📷 MAPA DE FOTOS DOS KITS PRONTOS */
+    const KIT_IMAGES = {
+      "kit-aniversario-30": "kit_festa.jpg",
+      "kit-aniversario-50": "festa-kit_50.jpg",
+      "kit-casamento-80": "kit_casamento.jpg",
+      "kit-cha-revelacao": "kit-cha-de-revelacao.jpg",
+      "kit-casamento-40": "kit_casamento_simples.jpg",
+      "kit-formatura-60": "kit_formatura.jpg",
+      "kit-corporativo-40": "festa_corporativa.png",
+      "kit-aniversario-infantil-25": "kit_festa_aniversario_kid.jpg",
+    };
+
     function productImgFile(id) {
       return PRODUCT_IMAGES[id] || (id + ".jpg");
+    }
+
+    function kitImgFile(id) {
+      return KIT_IMAGES[id] || (id + ".jpg");
     }
 
     /* ---------------- STATE ---------------- */
@@ -3416,13 +3432,14 @@
       document.getElementById('kitDetailTitle').textContent = kit.name;
       document.getElementById('kitDetailTag').textContent = kit.tag;
       document.getElementById('kitDetailDesc').textContent = kit.desc;
+      const kitImg = kitImgFile(kit.id);
       document.getElementById('kitDetailImgWrap').innerHTML = `
-    <img class="img-slot-photo" src="${kit.id}.jpg" alt="${kit.name}" loading="lazy"
+    <img class="img-slot-photo" src="${kitImg}" alt="${kit.name}" loading="lazy"
          onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
          onerror="this.style.display='none';">
     <div class="img-slot-fallback">
       ${KIT_ICON_MAP[kit.tag] || ''}
-      <span class="img-slot-tag">📷 ${kit.id}.jpg</span>
+      <span class="img-slot-tag">📷 ${kitImg}</span>
     </div>
   `;
       let subtotal = 0;
@@ -3892,14 +3909,15 @@
         const item = CATALOG_FLAT[entry.id];
         return item ? `<li>${item.name} × ${entry.qty}</li>` : '';
       }).join('');
+      const kitImg = kitImgFile(kit.id);
       card.innerHTML = `
     <div class="kit-img">
-      <img class="img-slot-photo" src="${kit.id}.jpg" alt="${kit.name}" loading="lazy"
+      <img class="img-slot-photo" src="${kitImg}" alt="${kit.name}" loading="lazy"
            onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
            onerror="this.style.display='none';">
       <div class="img-slot-fallback">
         ${KIT_ICON_MAP[kit.tag] || ''}
-        <span class="img-slot-tag">📷 ${kit.id}.jpg</span>
+        <span class="img-slot-tag">📷 ${kitImg}</span>
       </div>
     </div>
     <span class="kit-tag">${kit.tag}</span>
