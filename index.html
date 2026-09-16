@@ -656,9 +656,10 @@
       background: radial-gradient(120% 140% at 30% 20%, var(--bordo-2) 0%, var(--bordo) 60%, #2a0a10 100%);
       color: var(--ouro-claro);
       position: relative;
+      overflow: hidden;
     }
 
-    .gallery-photo svg {
+    .gallery-photo > svg {
       width: 52px;
       height: 52px;
     }
@@ -669,6 +670,7 @@
       inset: 8px;
       border: 1px solid rgba(216, 189, 142, .35);
       pointer-events: none;
+      z-index: 3;
     }
 
     .gallery-cap {
@@ -1206,6 +1208,7 @@
       object-fit: cover;
       display: block;
       z-index: 2;
+      background: var(--panel-bg);
     }
 
     .img-slot-tag {
@@ -1222,18 +1225,14 @@
       text-overflow: ellipsis;
     }
 
-    .gallery-photo {
-      position: relative;
-      overflow: hidden;
-    }
-
     .gallery-photo .img-slot-photo {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: none;
+      display: block;
+      z-index: 2;
     }
 
     .gallery-photo .img-slot-fallback {
@@ -1271,39 +1270,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: none;
-    }
-
-    .cover-photo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-      z-index: 0;
-    }
-
-    .cover-photo-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: radial-gradient(120% 140% at 20% 0%, rgba(78, 21, 32, .88) 0%, rgba(59, 15, 22, .92) 55%, rgba(42, 10, 16, .95) 100%);
-      display: none;
-    }
-
-    .cover-img-tag {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      font-size: 10.5px;
-      color: var(--ouro-claro);
-      background: rgba(0, 0, 0, .3);
-      border: 1px dashed rgba(216, 189, 142, .5);
-      border-radius: 20px;
-      padding: 4px 12px;
+      display: block;
+      z-index: 2;
     }
 
     .card,
@@ -1343,7 +1311,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: none;
+      display: block;
+      z-index: 2;
     }
 
     .detail-meta {
@@ -2183,13 +2152,8 @@
 <body>
   <a href="#catalogo" class="skip-link">Pular para o catálogo</a>
 
-  <!-- ===================== COVER ===================== -->
+  <!-- ===================== COVER (sem imagem de fundo) ===================== -->
   <header class="cover">
-    <img class="cover-photo" src="capa-hero.jpg" alt="JD Eventos" loading="eager"
-      onload="this.style.display='block'; document.getElementById('coverPhotoOverlay').style.display='block'; document.getElementById('coverImgTag').style.display='none';"
-      onerror="this.style.display='none';">
-    <div class="cover-photo-overlay" id="coverPhotoOverlay"></div>
-    <span class="cover-img-tag" id="coverImgTag">📷 capa-hero.jpg (opcional — foto de fundo da capa)</span>
     <div class="topbar">
       <a href="#" class="brand">
         <span class="monogram">JD</span>
@@ -2348,23 +2312,7 @@
     </div>
   </section>
 
-  <!-- ===================== CATALOGO (teaser) ===================== -->
-  <section id="catalogo">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow dark">Catálogo</span>
-        <h2>O que vamos levar para a sua festa</h2>
-        <div class="rule"></div>
-        <p>Mobiliário, toalhas, louças, copos, buffet e decoração de mesa — tudo em um catálogo só.</p>
-      </div>
-      <div class="teaser-icons" id="teaserIcons"></div>
-      <div class="teaser-center">
-        <button class="btn btn-verde" id="openCatalogBtn">Abrir catálogo completo</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== KITS PRONTOS (teaser) ===================== -->
+  <!-- ===================== KITS PRONTOS (agora acima do catálogo) ===================== -->
   <section id="kits">
     <div class="container">
       <div class="section-head">
@@ -2379,8 +2327,24 @@
     </div>
   </section>
 
+  <!-- ===================== CATALOGO (teaser) ===================== -->
+  <section id="catalogo" class="how">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow dark">Catálogo</span>
+        <h2>O que vamos levar para a sua festa</h2>
+        <div class="rule"></div>
+        <p>Mobiliário, toalhas, louças, copos, buffet e decoração de mesa — tudo em um catálogo só.</p>
+      </div>
+      <div class="teaser-icons" id="teaserIcons"></div>
+      <div class="teaser-center">
+        <button class="btn btn-verde" id="openCatalogBtn">Abrir catálogo completo</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== CALCULADORA (teaser) ===================== -->
-  <section class="how" id="calculadora">
+  <section id="calculadora">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow dark">Calcule seu evento</span>
@@ -2396,7 +2360,7 @@
   </section>
 
   <!-- ===================== GALERIA ===================== -->
-  <section id="galeria">
+  <section id="galeria" class="how">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow dark">Galeria</span>
@@ -2409,7 +2373,7 @@
   </section>
 
   <!-- ===================== FAQ ===================== -->
-  <section class="how" id="faq">
+  <section id="faq">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow dark">Dúvidas frequentes</span>
@@ -2449,7 +2413,7 @@
   </section>
 
   <!-- ===================== MAPA ===================== -->
-  <section id="localizacao">
+  <section id="localizacao" class="how">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow dark">Onde estamos</span>
@@ -3005,11 +2969,8 @@
       group.items.forEach(item => { CATALOG_FLAT[item.id] = { ...item, category: group.category }; });
     });
 
-    /* =====================================================================
-       📷 MAPA DE FOTOS — todas na raiz do repositório (sem pasta)
-       ===================================================================== */
+    /* ---- Mapa de fotos dos produtos ---- */
     const PRODUCT_IMAGES = {
-      /* Mobiliário */
       "cad-plastico": "cad-plastico.jpg",
       "cad-ferro": "cad-ferro.jpg",
       "mesa-plastico": "Mesa-plastico.jpg",
@@ -3017,8 +2978,6 @@
       "tampo-6pessoas": "Tampo-mesa-6-a-8.jpg",
       "tampo-115": "Tampo-mesa-115cm.jpg",
       "suporte-tampo": "Suporte-tampo.png",
-
-      /* Toalhas & Capas */
       "toalha-lisa": "Toalha-tampo-lisa.jpg",
       "toalha-jacquard": "Toalha-tampo-jacquard.jpg",
       "toalha-oxford": "Toalha-tampo-Oxford.jpg",
@@ -3029,8 +2988,6 @@
       "toalha-cobre-mancha": "Toalha-p-tampo-cobre-mancha.jpg",
       "capa-cadeira": "Capa-cadeira.jpg",
       "guardanapos": "guardanapo.jpg",
-
-      /* Louças & Talheres */
       "prato-mesa": "conjunto_pratos_mesa_refeicao.jpg",
       "prato-sobremesa": "pratos_sobremesa_quadrado.jpg",
       "prato-trabalhado": "prato_trabalhado.jpg",
@@ -3039,8 +2996,6 @@
       "travessa-folha-p": "travessa_folha_P.jpg",
       "travessa-vidro-folha": "travessa_folha_M.jpg",
       "travessa-melamina": "Travessa-Melamina-Folha-.jpg",
-
-      /* Copos & Taças */
       "taca-gallant": "taca_de_vidro_para_champanhe_gallant.jpg",
       "taca-paulista": "taca_paulista.jpg",
       "taca-diamante": "taca_de_agua_diamond.jpg",
@@ -3048,8 +3003,6 @@
       "copo-cylinder": "copo-long-drink-cylinder-300ml.jpg",
       "copo-whisky": "copo-de-whisky-amassadinho-250ml.jpg",
       "copo-chopp": "caneca_chopp_vidro.jpg",
-
-      /* Buffet & Serviço */
       "rechaud-redondo": "rechaud_redondo.jpg",
       "rechaud-mesa": "rechaud_de_aco_inox.jpg",
       "suqueira-3l": "suqueira_vidro_3l.jpg",
@@ -3061,16 +3014,12 @@
       "jarra-vidro": "jarra_vidro_1500ml.jpg",
       "bandeja-garcom": "bandeja_garcom.jpg",
       "utensilios-servir": "Utensílios_servir.jpg",
-
-      /* Doces & Decoração de mesa */
       "boleira-espelhado": "kit_travessa_redonda_espelhada_boleira.jpg",
       "boleira-doceira-escada": "kit_boleira_escada_doces.jpg",
       "bandeja-doces-acrilico": "bandeja_doces_acrilico.jpg",
       "boleira-lirio": "Boleira_Vidro_Lirio.jpg",
       "boleira-flor": "boleira_flor.jpg",
       "sousplast-ratan": "sousplast_rattan.jpg",
-
-      /* Chá revelação */
       "lanca-papel": "lanca_papel.jpg",
     };
 
@@ -3383,8 +3332,7 @@
       document.getElementById('detailDesc').textContent = item.desc;
       const imgFile = productImgFile(item.id);
       document.getElementById('detailImgWrap').innerHTML = `
-    <img class="img-slot-photo" src="${imgFile}" alt="${item.name}" loading="lazy"
-         onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+    <img class="img-slot-photo" src="${imgFile}" alt="${item.name}" loading="eager"
          onerror="this.style.display='none';">
     <div class="img-slot-fallback">
       ${ICONS[category] || ''}
@@ -3417,12 +3365,9 @@
       document.getElementById('kitDetailTag').textContent = kit.tag;
       document.getElementById('kitDetailDesc').textContent = kit.desc;
       document.getElementById('kitDetailImgWrap').innerHTML = `
-    <img class="img-slot-photo" src="${kit.id}.jpg" alt="${kit.name}" loading="lazy"
-         onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
-         onerror="this.style.display='none';">
-    <div class="img-slot-fallback">
+    <div class="img-slot-fallback" style="background:linear-gradient(160deg,var(--panel-bg),var(--branco));">
       ${KIT_ICON_MAP[kit.tag] || ''}
-      <span class="img-slot-tag">📷 ${kit.id}.jpg</span>
+      <span class="img-slot-tag">Kit ${kit.tag}</span>
     </div>
   `;
       let subtotal = 0;
@@ -3475,8 +3420,7 @@
         const imgFile = productImgFile(item.id);
         card.innerHTML = `
       <div class="card-img">
-        <img class="img-slot-photo" src="${imgFile}" alt="${item.name}" loading="lazy"
-             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+        <img class="img-slot-photo" src="${imgFile}" alt="${item.name}" loading="eager"
              onerror="this.style.display='none';">
         <div class="img-slot-fallback">
           ${ICONS[group.category] || ''}
@@ -3581,8 +3525,7 @@
       card.className = 'gallery-card';
       card.innerHTML = `
     <div class="gallery-photo">
-      <img class="img-slot-photo" src="${imgFile}" alt="${g.label} — JD Eventos" loading="lazy"
-           onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+      <img class="img-slot-photo" src="${imgFile}" alt="${g.label} — JD Eventos" loading="eager"
            onerror="this.style.display='none';">
       <div class="img-slot-fallback">
         ${g.icon}
@@ -3894,12 +3837,9 @@
       }).join('');
       card.innerHTML = `
     <div class="kit-img">
-      <img class="img-slot-photo" src="${kit.id}.jpg" alt="${kit.name}" loading="lazy"
-           onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
-           onerror="this.style.display='none';">
-      <div class="img-slot-fallback">
+      <div class="img-slot-fallback" style="background:linear-gradient(160deg,var(--panel-bg),var(--branco));">
         ${KIT_ICON_MAP[kit.tag] || ''}
-        <span class="img-slot-tag">📷 ${kit.id}.jpg</span>
+        <span class="img-slot-tag">Kit ${kit.tag}</span>
       </div>
     </div>
     <span class="kit-tag">${kit.tag}</span>
