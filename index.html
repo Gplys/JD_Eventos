@@ -1,0 +1,4236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JD Eventos — Locação de utensílios para festas | Suzano-SP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bordo: #3B0F16;
+      --bordo-2: #4E1520;
+      --ouro: #B8935A;
+      --ouro-claro: #D9BD8E;
+      --marfim: #FBF3E7;
+      --marfim-2: #F3E8D6;
+      --tinta: #2B211C;
+      --tinta-suave: #6b5f56;
+      --verde: #4B6B4E;
+      --branco: #FFFFFF;
+      --linha: rgba(59, 15, 22, 0.14);
+      --sombra: 0 20px 45px -20px rgba(59, 15, 22, 0.35);
+      /* fundo de página/superfícies e cor de destaque — variam no modo escuro */
+      --page-bg: var(--marfim);
+      --panel-bg: var(--marfim-2);
+      --accent-text: var(--bordo);
+      --nav-bg: rgba(251, 243, 231, .92);
+    }
+
+    html.dark-mode {
+      --page-bg: #17100D;
+      --panel-bg: #241A15;
+      --branco: #241A15;
+      --tinta: #F1E4D2;
+      --tinta-suave: #B7A594;
+      --linha: rgba(216, 189, 142, 0.18);
+      --accent-text: var(--ouro-claro);
+      --sombra: 0 20px 45px -18px rgba(0, 0, 0, 0.6);
+      --nav-bg: rgba(23, 16, 13, .92);
+    }
+
+    html.dark-mode body {
+      background: var(--page-bg);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Work Sans', sans-serif;
+      color: var(--tinta);
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    .serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ouro);
+      font-weight: 600;
+    }
+
+    .eyebrow.dark {
+      color: var(--verde);
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 0;
+      background: var(--verde);
+      color: #fff;
+      padding: 10px 16px;
+      z-index: 999;
+    }
+
+    .skip-link:focus {
+      left: 12px;
+      top: 12px;
+    }
+
+    /* ---------- COVER / HERO ---------- */
+    .cover {
+      position: relative;
+      background: radial-gradient(120% 140% at 20% 0%, var(--bordo-2) 0%, var(--bordo) 55%, #2a0a10 100%);
+      color: var(--marfim);
+      padding: 26px 0 90px;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(216, 189, 142, 0.55);
+      pointer-events: none;
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 20px;
+      border: 1px solid rgba(216, 189, 142, 0.22);
+      pointer-events: none;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 26px 0;
+      position: relative;
+      z-index: 3;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--marfim);
+    }
+
+    .monogram {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--ouro-claro);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      letter-spacing: .03em;
+      color: var(--ouro-claro);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      letter-spacing: .02em;
+    }
+
+    .brand-name span {
+      display: block;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--ouro-claro);
+      margin-top: 2px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 90px 20px 20px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero-inner .eyebrow {
+      color: var(--ouro-claro);
+    }
+
+    .hero-inner h1 {
+      font-weight: 500;
+      font-style: italic;
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.08;
+      margin: 18px 0 22px;
+      letter-spacing: .01em;
+    }
+
+    .hero-inner p {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--marfim-2);
+      max-width: 520px;
+      margin: 0 auto 34px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 30px;
+      border-radius: 2px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
+    }
+
+    .btn-gold {
+      background: var(--ouro);
+      color: var(--bordo);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      background: var(--ouro-claro);
+    }
+
+    .btn-ghost {
+      border-color: rgba(216, 189, 142, .6);
+      color: var(--marfim);
+      background: transparent;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(216, 189, 142, .12);
+      transform: translateY(-2px);
+    }
+
+    .btn-verde {
+      background: var(--verde);
+      color: #fff;
+    }
+
+    .btn-verde:hover {
+      transform: translateY(-2px);
+      background: #3d5a40;
+    }
+
+    .btn-outline-dark {
+      border-color: var(--linha);
+      color: var(--accent-text);
+      background: transparent;
+    }
+
+    .btn-outline-dark:hover {
+      background: var(--panel-bg);
+      transform: translateY(-2px);
+    }
+
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .scroll-cue {
+      margin: 56px auto 0;
+      width: 1px;
+      height: 46px;
+      background: linear-gradient(to bottom, rgba(216, 189, 142, .9), transparent);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ---------- STICKY NAV ---------- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--nav-bg);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--linha);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      max-width: 1180px;
+      margin: 0 auto;
+      gap: 14px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hamburger-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--linha);
+      background: transparent;
+      color: var(--accent-text);
+      flex-shrink: 0;
+      padding: 0;
+    }
+
+    .hamburger-btn:hover {
+      background: var(--panel-bg);
+    }
+
+    .hamburger-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .hamburger-btn .icon-close {
+      display: none;
+    }
+
+    .hamburger-btn.open .icon-menu {
+      display: none;
+    }
+
+    .hamburger-btn.open .icon-close {
+      display: block;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--linha);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+
+    .nav-dropdown.open {
+      max-height: 480px;
+    }
+
+    .nav-dropdown-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 6px 28px 16px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      border-bottom: 1px solid var(--linha);
+    }
+
+    .nav-links li:last-child {
+      border-bottom: none;
+    }
+
+    .nav-links a,
+    .nav-links button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      text-decoration: none;
+      font-size: 13.5px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      font-weight: 500;
+      padding: 13px 4px;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links button:hover {
+      color: var(--accent-text);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--tinta);
+    }
+
+    .nav-brand .monogram {
+      width: 32px;
+      height: 32px;
+      font-size: 15px;
+      border-color: var(--accent-text);
+      color: var(--accent-text);
+    }
+
+    .nav-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+    }
+
+    .cart-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bordo);
+      color: var(--marfim);
+      border: none;
+      padding: 11px 18px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 2px;
+    }
+
+    .cart-btn:hover {
+      background: var(--bordo-2);
+    }
+
+    .cart-count {
+      background: var(--ouro);
+      color: var(--bordo);
+      border-radius: 50%;
+      width: 19px;
+      height: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .account-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1px solid var(--linha);
+      color: var(--tinta);
+      padding: 10px 15px;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 2px;
+    }
+
+    .account-btn:hover {
+      background: var(--panel-bg);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--linha);
+      background: transparent;
+      color: var(--accent-text);
+      flex-shrink: 0;
+      padding: 0;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--panel-bg);
+    }
+
+    .theme-toggle-btn svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .theme-toggle-btn .icon-sun {
+      display: none;
+    }
+
+    html.dark-mode .theme-toggle-btn .icon-moon {
+      display: none;
+    }
+
+    html.dark-mode .theme-toggle-btn .icon-sun {
+      display: block;
+    }
+
+
+    /* ---------- SECTIONS ---------- */
+    section {
+      padding: 86px 0;
+    }
+
+    .section-head {
+      max-width: 640px;
+      margin: 0 auto 44px;
+      text-align: center;
+    }
+
+    .section-head h2 {
+      font-size: clamp(30px, 4vw, 42px);
+      font-weight: 500;
+      margin: 10px 0 14px;
+    }
+
+    .section-head p {
+      color: var(--tinta-suave);
+      line-height: 1.7;
+      font-size: 15.5px;
+    }
+
+    .rule {
+      width: 64px;
+      height: 1px;
+      background: var(--ouro);
+      margin: 0 auto;
+    }
+
+    .how {
+      background: var(--branco);
+      border-top: 1px solid var(--linha);
+      border-bottom: 1px solid var(--linha);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--ouro);
+      margin-bottom: 10px;
+    }
+
+    .step h3 {
+      font-size: 23px;
+      font-weight: 500;
+      margin: 0 0 10px;
+    }
+
+    .step p {
+      font-size: 14.5px;
+      color: var(--tinta-suave);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* teaser sections that open modals */
+    .teaser-icons {
+      display: flex;
+      justify-content: center;
+      gap: 26px;
+      flex-wrap: wrap;
+      margin: 0 0 40px;
+    }
+
+    .teaser-icons .ti {
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--linha);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--branco);
+      color: var(--ouro);
+    }
+
+    .teaser-icons .ti svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    /* ---------- GALLERY ---------- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 22px;
+    }
+
+    .gallery-card {
+      background: var(--branco);
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow .2s ease, transform .2s ease;
+      cursor: pointer;
+    }
+
+    .gallery-card:hover {
+      box-shadow: var(--sombra);
+      transform: translateY(-3px);
+    }
+
+    .gallery-photo {
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(120% 140% at 30% 20%, var(--bordo-2) 0%, var(--bordo) 60%, #2a0a10 100%);
+      color: var(--ouro-claro);
+      position: relative;
+    }
+
+    .gallery-photo svg {
+      width: 52px;
+      height: 52px;
+    }
+
+    .gallery-photo::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(216, 189, 142, .35);
+      pointer-events: none;
+    }
+
+    .gallery-cap {
+      padding: 16px 18px;
+    }
+
+    .gallery-cap h4 {
+      margin: 0 0 4px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    .gallery-cap p {
+      margin: 0;
+      font-size: 12.5px;
+      color: var(--tinta-suave);
+      line-height: 1.5;
+    }
+
+    /* ---------- SOBRE ---------- */
+    .sobre {
+      background: var(--branco);
+      border-top: 1px solid var(--linha);
+      border-bottom: 1px solid var(--linha);
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .sobre-text .eyebrow {
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .sobre-text h2 {
+      font-size: clamp(28px, 3.6vw, 38px);
+      font-weight: 500;
+      margin: 0 0 18px;
+      line-height: 1.2;
+    }
+
+    .sobre-text p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--tinta-suave);
+      margin: 0 0 16px;
+    }
+
+    .sobre-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sobre-h-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .sobre-h-icon {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--panel-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-text);
+    }
+
+    .sobre-h-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .sobre-h-item h4 {
+      margin: 0 0 4px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .sobre-h-item p {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--tinta-suave);
+      line-height: 1.6;
+    }
+
+    /* ---------- KITS ---------- */
+    .kits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .kit-card {
+      background: var(--branco);
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .kit-card:hover {
+      box-shadow: var(--sombra);
+    }
+
+    .kit-card h4 {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .kit-card .kit-tag {
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--ouro);
+      font-weight: 700;
+    }
+
+    .kit-card p.kit-desc {
+      font-size: 13px;
+      color: var(--tinta-suave);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .kit-items {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 12.5px;
+      color: var(--tinta);
+    }
+
+    .kit-items li {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px dotted var(--linha);
+    }
+
+    .kit-items li span:last-child {
+      color: var(--tinta-suave);
+    }
+
+    .kit-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 8px;
+    }
+
+    .kit-foot .kit-total {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--accent-text);
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-list {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--branco);
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      padding: 4px 20px;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 16px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: "+";
+      font-size: 22px;
+      color: var(--ouro);
+      flex-shrink: 0;
+      font-weight: 400;
+      transition: transform .2s ease;
+    }
+
+    .faq-item[open] summary::after {
+      content: "–";
+    }
+
+    .faq-item p {
+      font-size: 13.5px;
+      color: var(--tinta-suave);
+      line-height: 1.7;
+      margin: 0 0 18px;
+    }
+
+    /* ---------- MAPA ---------- */
+    .map-wrap {
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: var(--sombra);
+    }
+
+    .map-wrap iframe {
+      width: 100%;
+      height: 360px;
+      border: 0;
+      display: block;
+    }
+
+    .map-below {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .map-below p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--tinta-suave);
+    }
+
+    .map-below p strong {
+      color: var(--tinta);
+    }
+
+    /* ---------- FLOATING WHATSAPP ---------- */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--verde);
+      color: #fff;
+      padding: 14px 20px 14px 16px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px -8px rgba(75, 107, 78, .55);
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .wa-float:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px -8px rgba(75, 107, 78, .65);
+    }
+
+    .wa-float svg {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .wa-float .wa-label {
+      white-space: nowrap;
+    }
+
+    @media (max-width:600px) {
+      .wa-float .wa-label {
+        display: none;
+      }
+
+      .wa-float {
+        padding: 14px;
+      }
+    }
+
+    /* ---------- CALCULATOR ---------- */
+    .calc-form {
+      display: flex;
+      gap: 14px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .calc-form .field {
+      margin-bottom: 0;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .calc-intro {
+      font-size: 13px;
+      color: var(--tinta-suave);
+      margin: 10px 0 22px;
+      line-height: 1.6;
+    }
+
+    .calc-results-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 26px 0 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .calc-results-head h3 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 500;
+    }
+
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--linha);
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .calc-row .di-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .calc-row .di-cat {
+      font-size: 10.5px;
+      color: var(--tinta-suave);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .calc-row .calc-note {
+      font-size: 12px;
+      color: var(--verde);
+      margin-top: 2px;
+    }
+
+    .calc-row-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .calc-row.added .add-btn {
+      background: var(--verde);
+    }
+
+    .teaser-center {
+      text-align: center;
+    }
+
+    .teaser-note {
+      font-size: 13px;
+      color: var(--tinta-suave);
+      margin-top: 14px;
+    }
+
+    .teaser-note strong {
+      color: var(--accent-text);
+    }
+
+    .teaser.dark {
+      background: var(--bordo);
+      color: var(--marfim);
+      position: relative;
+    }
+
+    .teaser.dark::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(216, 189, 142, .28);
+      pointer-events: none;
+    }
+
+    .teaser.dark .section-head p {
+      color: var(--marfim-2);
+    }
+
+    .teaser.dark .section-head .eyebrow {
+      color: var(--ouro-claro);
+    }
+
+    .teaser.dark .teaser-note {
+      color: var(--marfim-2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .teaser.dark .teaser-note strong {
+      color: var(--ouro-claro);
+    }
+
+    .teaser.dark .teaser-center {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* category label */
+    .course-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 52px 0 24px;
+    }
+
+    .course-label:first-of-type {
+      margin-top: 0;
+    }
+
+    .course-label .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--ouro);
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .course-label .cl-icon {
+      width: 26px;
+      height: 26px;
+      color: var(--accent-text);
+      flex-shrink: 0;
+    }
+
+    .course-label .cl-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .course-label h3 {
+      font-size: 24px;
+      font-weight: 500;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .course-label .ln {
+      height: 1px;
+      background: var(--linha);
+      flex: 1;
+    }
+
+    .grid-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--branco);
+      border: 1px solid var(--linha);
+      border-radius: 3px;
+      padding: 18px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: box-shadow .2s ease, transform .2s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--sombra);
+      transform: translateY(-3px);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, var(--panel-bg), var(--branco));
+      border: 1px solid var(--linha);
+      border-radius: 3px;
+      margin-bottom: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-img svg {
+      width: 42px;
+      height: 42px;
+      color: var(--ouro);
+    }
+
+    .img-slot-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .img-slot-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .img-slot-tag {
+      font-size: 8.5px;
+      letter-spacing: .02em;
+      color: var(--tinta-suave);
+      background: var(--page-bg);
+      border: 1px dashed var(--linha);
+      border-radius: 20px;
+      padding: 2px 7px;
+      white-space: nowrap;
+      max-width: 92%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .gallery-photo {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-photo .img-slot-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .gallery-photo .img-slot-fallback {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gallery-photo .img-slot-tag {
+      background: rgba(0, 0, 0, .25);
+      border-color: rgba(216, 189, 142, .5);
+      color: var(--ouro-claro);
+    }
+
+    .kit-img {
+      width: 100%;
+      height: 110px;
+      border-radius: 3px;
+      margin-bottom: 2px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, var(--panel-bg), var(--branco));
+      border: 1px solid var(--linha);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .kit-img .img-slot-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .cover-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      z-index: 0;
+    }
+
+    .cover-photo-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(120% 140% at 20% 0%, rgba(78, 21, 32, .88) 0%, rgba(59, 15, 22, .92) 55%, rgba(42, 10, 16, .95) 100%);
+      display: none;
+    }
+
+    .cover-img-tag {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      font-size: 10.5px;
+      color: var(--ouro-claro);
+      background: rgba(0, 0, 0, .3);
+      border: 1px dashed rgba(216, 189, 142, .5);
+      border-radius: 20px;
+      padding: 4px 12px;
+    }
+
+    .card,
+    .kit-card {
+      cursor: pointer;
+    }
+
+    .card .card-foot,
+    .kit-card .add-kit-btn,
+    .kit-card details {
+      cursor: default;
+    }
+
+    .detail-img {
+      width: 100%;
+      height: 220px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, var(--panel-bg), var(--branco));
+      border: 1px solid var(--linha);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .detail-img svg {
+      width: 64px;
+      height: 64px;
+      color: var(--ouro);
+    }
+
+    .detail-img .img-slot-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .detail-desc {
+      font-size: 14.5px;
+      color: var(--tinta-suave);
+      line-height: 1.7;
+      margin: 10px 0 0;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 20px;
+      margin: 0;
+      line-height: 1.25;
+    }
+
+    .tag {
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--verde);
+      border: 1px solid rgba(75, 107, 78, .3);
+      padding: 3px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card p {
+      font-size: 13.5px;
+      color: var(--tinta-suave);
+      line-height: 1.55;
+      margin: 0;
+      flex: 1;
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--verde);
+      margin: -4px 0 0;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .price {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: .01em;
+      font-variant-numeric: tabular-nums;
+      color: var(--accent-text);
+    }
+
+    .price.consulta {
+      font-size: 13.5px;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 600;
+      color: var(--tinta-suave);
+      font-style: italic;
+    }
+
+    .price-old {
+      font-size: 12.5px;
+      font-family: 'Work Sans', sans-serif;
+      font-variant-numeric: tabular-nums;
+      color: var(--tinta-suave);
+      text-decoration: line-through;
+    }
+
+    .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .policy-banner {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--panel-bg);
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      padding: 16px 20px;
+      margin: 0 0 36px;
+      font-size: 13.5px;
+      color: var(--tinta-suave);
+      line-height: 1.6;
+    }
+
+    .policy-banner .pb-icon {
+      color: var(--ouro);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .stepper {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--linha);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .stepper button {
+      background: var(--panel-bg);
+      border: none;
+      width: 28px;
+      height: 30px;
+      font-size: 16px;
+      color: var(--accent-text);
+    }
+
+    .stepper button:hover {
+      background: var(--ouro-claro);
+    }
+
+    .stepper input {
+      width: 34px;
+      border: none;
+      text-align: center;
+      font-size: 13.5px;
+      font-family: inherit;
+      background: var(--branco);
+      color: var(--tinta);
+      -moz-appearance: textfield;
+    }
+
+    .stepper input::-webkit-outer-spin-button,
+    .stepper input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .add-btn {
+      background: var(--bordo);
+      color: var(--marfim);
+      border: none;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 3px;
+    }
+
+    .add-btn:hover {
+      background: var(--bordo-2);
+    }
+
+    .add-btn.added {
+      background: var(--verde);
+    }
+
+    /* ---------- MODALS ---------- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(43, 33, 28, .55);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 36px 18px;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: var(--page-bg);
+      width: 100%;
+      max-width: 1100px;
+      border-radius: 6px;
+      box-shadow: var(--sombra);
+      margin: auto;
+      max-height: calc(100vh - 72px);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(14px);
+      transition: transform .25s ease;
+    }
+
+    .modal-overlay.open .modal-box {
+      transform: translateY(0);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 20px 26px;
+      border-bottom: 1px solid var(--linha);
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 500;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      line-height: 1;
+      color: var(--tinta-suave);
+      padding: 4px;
+    }
+
+    .modal-close:hover {
+      color: var(--accent-text);
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      padding: 22px 26px 6px;
+      flex: 1;
+    }
+
+    .modal-foot {
+      padding: 14px 26px;
+      border-top: 1px solid var(--linha);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .modal-foot .mf-count {
+      font-size: 13.5px;
+      color: var(--tinta-suave);
+    }
+
+    .modal-foot .mf-count strong {
+      color: var(--accent-text);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+    }
+
+    .sel-list {
+      margin-bottom: 8px;
+    }
+
+    .sel-head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .sel-head-row h3 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 500;
+    }
+
+    .sel-head-row button {
+      background: none;
+      border: none;
+      color: var(--verde);
+      font-size: 12.5px;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    .empty-msg {
+      text-align: center;
+      color: var(--tinta-suave);
+      font-size: 13.5px;
+      padding: 22px 10px;
+      font-style: italic;
+    }
+
+    .sel-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--linha);
+      gap: 10px;
+    }
+
+    .sel-item .di-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .sel-item .di-cat {
+      font-size: 10.5px;
+      color: var(--tinta-suave);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .sel-item .di-remove {
+      background: none;
+      border: none;
+      color: #a33;
+      font-size: 11.5px;
+      text-decoration: underline;
+      padding: 0;
+      margin-top: 3px;
+    }
+
+    /* ---------- CONTRACT / RSVP (inside order modal) ---------- */
+    .contract-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 36px;
+      align-items: start;
+      margin-top: 30px;
+    }
+
+    .form-card {
+      background: var(--branco);
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      padding: 26px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11.5px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--tinta-suave);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--linha);
+      border-radius: 3px;
+      font-family: inherit;
+      font-size: 14px;
+      background: var(--branco);
+      color: var(--tinta);
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: 2px solid var(--verde);
+      outline-offset: 1px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 74px;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--tinta-suave);
+      margin: -4px 0 16px;
+    }
+
+    .submit-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .invite-card {
+      background: var(--branco);
+      border: 1px solid var(--ouro-claro);
+      border-radius: 4px;
+      padding: 32px 26px;
+      position: relative;
+    }
+
+    .invite-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .invite-eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--ouro);
+      font-weight: 700;
+    }
+
+    .invite-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 26px;
+      margin: 10px 0 4px;
+      min-height: 34px;
+    }
+
+    .invite-sub {
+      font-size: 12.5px;
+      color: var(--tinta-suave);
+      margin-bottom: 16px;
+      min-height: 18px;
+    }
+
+    .invite-divider {
+      width: 44px;
+      height: 1px;
+      background: var(--ouro);
+      margin: 0 auto 16px;
+    }
+
+    .invite-list {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+      font-size: 13.5px;
+    }
+
+    .invite-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px dotted var(--linha);
+    }
+
+    .invite-list li span:first-child {
+      color: var(--tinta);
+    }
+
+    .invite-list li span:last-child {
+      color: var(--tinta-suave);
+      font-size: 12px;
+    }
+
+    .invite-empty {
+      font-size: 13px;
+      color: var(--tinta-suave);
+      padding: 14px 0;
+      font-style: italic;
+    }
+
+    .invite-total {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      font-variant-numeric: tabular-nums;
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--ouro-claro);
+      padding-top: 10px;
+    }
+
+    .confirm-box {
+      display: none;
+      text-align: center;
+      padding: 26px 10px 8px;
+    }
+
+    .confirm-box.show {
+      display: block;
+    }
+
+    .confirm-box .check {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid var(--verde);
+      color: var(--verde);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      font-size: 22px;
+    }
+
+    .confirm-box h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    .confirm-box p {
+      color: var(--tinta-suave);
+      font-size: 13.5px;
+      line-height: 1.6;
+      max-width: 400px;
+      margin: 0 auto 18px;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: #2a0a10;
+      color: var(--marfim-2);
+      padding: 56px 0 26px;
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .foot-brand .brand-name {
+      color: var(--marfim);
+    }
+
+    .foot-brand p {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: rgba(243, 232, 214, .7);
+      margin-top: 14px;
+      max-width: 280px;
+    }
+
+    footer h5 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ouro-claro);
+      margin: 0 0 14px;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13.5px;
+      line-height: 2.1;
+      color: rgba(243, 232, 214, .85);
+    }
+
+    footer a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    footer a:hover {
+      color: var(--ouro-claro);
+    }
+
+    .foot-bottom {
+      border-top: 1px solid rgba(216, 189, 142, .16);
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+      color: rgba(243, 232, 214, .55);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      background: var(--bordo);
+      color: var(--marfim);
+      padding: 13px 22px;
+      border-radius: 3px;
+      font-size: 13.5px;
+      box-shadow: var(--sombra);
+      opacity: 0;
+      pointer-events: none;
+      transition: all .25s ease;
+      z-index: 300;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* ---------- AUTH ---------- */
+    .auth-box {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--linha);
+      margin-bottom: 22px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 12px;
+      font-size: 13px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--tinta-suave);
+      border-bottom: 2px solid transparent;
+    }
+
+    .auth-tab.active {
+      color: var(--accent-text);
+      border-color: var(--ouro);
+    }
+
+    .auth-panel {
+      display: none;
+    }
+
+    .auth-panel.active {
+      display: block;
+    }
+
+    .auth-error {
+      background: #fbeaea;
+      border: 1px solid #e2b7b7;
+      color: #8a2f2f;
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 3px;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    .auth-error.show {
+      display: block;
+    }
+
+    .auth-note {
+      font-size: 12px;
+      color: var(--tinta-suave);
+      line-height: 1.6;
+      margin-top: 16px;
+      background: var(--panel-bg);
+      padding: 12px 14px;
+      border-radius: 3px;
+    }
+
+    .gate-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      background: var(--panel-bg);
+      border: 1px solid var(--ouro-claro);
+      border-radius: 4px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      font-size: 13.5px;
+      color: var(--tinta);
+    }
+
+    .gate-banner strong {
+      color: var(--accent-text);
+    }
+
+    .account-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      background: var(--panel-bg);
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      padding: 12px 18px;
+      margin-bottom: 22px;
+      font-size: 13.5px;
+    }
+
+    .account-summary .as-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .account-summary .as-actions button {
+      background: none;
+      border: none;
+      font-size: 12px;
+      text-decoration: underline;
+      color: var(--verde);
+      padding: 0;
+    }
+
+    .account-summary .as-actions button.logout {
+      color: #a33;
+    }
+
+    .orders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .order-card {
+      background: var(--branco);
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      padding: 18px 20px;
+    }
+
+    .order-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .order-card-head h4 {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    .order-card-head span {
+      font-size: 12px;
+      color: var(--tinta-suave);
+    }
+
+    .order-card p {
+      font-size: 13px;
+      color: var(--tinta-suave);
+      margin: 2px 0;
+    }
+
+    .order-card ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      font-size: 13px;
+      color: var(--tinta);
+    }
+
+    @media (max-width:860px) {
+      .steps {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .contract-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .foot-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .field-row {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-box {
+        max-height: calc(100vh - 40px);
+      }
+
+      .sobre-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+  <script>
+    /* Aplica o tema salvo antes da página desenhar, para não piscar
+       claro->escuro na primeira renderização. */
+    (function () {
+      try {
+        var saved = localStorage.getItem('jdeventos_theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        } else if (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body>
+  <!--
+  ================================================================
+  COMO COLOCAR AS FOTOS NO SITE (leia isso primeiro!)
+  ================================================================
+  Você NÃO precisa mexer em nenhum código. Basta:
+
+  1) Criar uma pasta chamada "fotos" bem do lado deste arquivo
+     index.html (mesmo lugar, mesma pasta).
+
+  2) Salvar cada foto dentro dessa pasta usando o nome EXATO que
+     aparece numa etiquetinha cinza "📷 fotos/nome-do-arquivo.jpg"
+     em cada espaço reservado do site (produtos do catálogo, kits
+     prontos, galeria de eventos e a foto de fundo da capa).
+
+  3) Pronto! Assim que o arquivo com o nome certo estiver na pasta
+     "fotos", a foto aparece sozinha no lugar do ícone/desenho —
+     não precisa avisar ninguém nem editar mais nada.
+
+  Dica: use fotos na horizontal (paisagem) e não muito pesadas
+  (até 1-2MB cada) para o site carregar rápido.
+  ================================================================
+-->
+  <a href="#catalogo" class="skip-link">Pular para o catálogo</a>
+
+  <!-- ===================== COVER ===================== -->
+  <header class="cover">
+    <img class="cover-photo" src="fotos/capa-hero.jpg" alt="JD Eventos" loading="eager"
+      onload="this.style.display='block'; document.getElementById('coverPhotoOverlay').style.display='block'; document.getElementById('coverImgTag').style.display='none';"
+      onerror="this.style.display='none';">
+    <div class="cover-photo-overlay" id="coverPhotoOverlay"></div>
+    <span class="cover-img-tag" id="coverImgTag">📷 fotos/capa-hero.jpg (opcional — foto de fundo da capa)</span>
+    <div class="topbar">
+      <a href="#" class="brand">
+        <span class="monogram">JD</span>
+        <span class="brand-name">JD Eventos<span>Locação para festas · Suzano-SP</span></span>
+      </a>
+    </div>
+    <div class="hero-inner">
+      <p class="eyebrow">Cada detalhe da sua mesa, cuidado por nós</p>
+      <h1>Sua festa, servida<br>com elegância.</h1>
+      <p>Cadeiras, mesas, toalhas, louças, copos e buffet completo para o seu evento. Monte sua lista de itens aqui no
+        site e envie o pedido direto para a nossa equipe — sem trocar dezenas de mensagens.</p>
+      <div class="cta-row">
+        <button class="btn btn-gold" id="heroCatalogo">Ver catálogo</button>
+        <button class="btn btn-ghost" id="heroPedido">Montar meu evento</button>
+      </div>
+    </div>
+    <div class="scroll-cue"></div>
+  </header>
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="#" class="nav-brand">
+          <span class="monogram">JD</span>
+          <span class="nav-brand-name">JD Eventos</span>
+        </a>
+        <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Abrir menu" aria-expanded="false"
+          aria-controls="navDropdown">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="17" x2="20" y2="17" />
+          </svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="5" x2="19" y2="19" />
+            <line x1="19" y1="5" x2="5" y2="19" />
+          </svg>
+        </button>
+      </div>
+      <div class="nav-right">
+        <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Alternar modo escuro"
+          title="Alternar modo escuro">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4.5" />
+            <path
+              d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" />
+          </svg>
+        </button>
+        <button class="cart-btn" id="cartOpenBtn" aria-haspopup="dialog">
+          Meu evento <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="account-btn" id="accountBtn">Entrar</button>
+      </div>
+    </div>
+    <div class="nav-dropdown" id="navDropdown">
+      <div class="nav-dropdown-inner">
+        <ul class="nav-links">
+          <li><a href="#sobre">Sobre</a></li>
+          <li><button id="navCatalogo" type="button">Catálogo</button></li>
+          <li><button id="navKits" type="button">Kits</button></li>
+          <li><button id="navCalc" type="button">Calculadora</button></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><button id="navPedido" type="button">Pedido</button></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== SOBRE ===================== -->
+  <!--
+  PARA A JD EVENTOS: o texto abaixo é um rascunho inicial, escrito sem
+  saber a história real da empresa. Me conte como e quando começou,
+  o que te motivou e qualquer detalhe pessoal que queira destacar, que
+  eu reescrevo com as informações certas.
+-->
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <div class="sobre-grid">
+        <div class="sobre-text">
+          <span class="eyebrow dark">Sobre a JD Eventos</span>
+          <h2>Cuidado com cada detalhe, do primeiro contato à última mesa.</h2>
+          <p>A JD Eventos nasceu para tirar o peso da organização de festas das costas de quem só quer aproveitar o
+            próprio evento. Trabalhamos com locação de cadeiras, mesas, toalhas, louças, copos e buffet completo para
+            aniversários, casamentos, formaturas, chás revelação e eventos corporativos em Suzano e região.</p>
+          <p>Cada peça que sai daqui passa por conferência antes de chegar até você — porque sabemos que um evento não
+            tem segunda chance.</p>
+        </div>
+        <div class="sobre-highlights">
+          <div class="sobre-h-item">
+            <span class="sobre-h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5" />
+              </svg></span>
+            <div>
+              <h4>Material sempre conferido</h4>
+              <p>Cada item passa por checagem antes de sair, para chegar em ordem no seu evento.</p>
+            </div>
+          </div>
+          <div class="sobre-h-item">
+            <span class="sobre-h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 3" />
+              </svg></span>
+            <div>
+              <h4>Atendimento direto</h4>
+              <p>Você fala com a gente pelo WhatsApp e recebe uma resposta próxima, sem robôs de atendimento.</p>
+            </div>
+          </div>
+          <div class="sobre-h-item">
+            <span class="sobre-h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg></span>
+            <div>
+              <h4>Praticidade do início ao fim</h4>
+              <p>Monte a lista do seu evento online e envie o pedido pronto — sem trocar dezenas de mensagens.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="how" id="como-funciona">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow dark">Como funciona</span>
+        <h2>Do catálogo ao contrato, em três passos</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">Primeiro</div>
+          <h3>Escolha os itens</h3>
+          <p>Abra o catálogo e adicione cadeiras, mesas, toalhas, louças e serviços de buffet à lista do seu evento.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">Depois</div>
+          <h3>Preencha os dados</h3>
+          <p>Informe a data, o endereço e o tipo de evento. Sua lista de itens aparece automaticamente no resumo.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">Por fim</div>
+          <h3>Envie o pedido</h3>
+          <p>Envie o resumo pronto por WhatsApp ou e-mail. Nossa equipe confirma disponibilidade e valores rapidinho.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CATALOGO (teaser) ===================== -->
+  <section id="catalogo">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow dark">Catálogo</span>
+        <h2>O que vamos levar para a sua festa</h2>
+        <div class="rule"></div>
+        <p>Mobiliário, toalhas, louças, copos, buffet e decoração de mesa — tudo em um catálogo só.</p>
+      </div>
+      <div class="teaser-icons" id="teaserIcons"></div>
+      <div class="teaser-center">
+        <button class="btn btn-verde" id="openCatalogBtn">Abrir catálogo completo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== KITS PRONTOS (teaser) ===================== -->
+  <section id="kits">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow dark">Kits prontos</span>
+        <h2>Combos já montados para o seu tipo de evento</h2>
+        <div class="rule"></div>
+        <p>Não quer montar item por item? Comece de um combo pronto e ajuste o que for preciso.</p>
+      </div>
+      <div class="teaser-center">
+        <button class="btn btn-verde" id="openKitsBtn">Ver kits prontos</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CALCULADORA (teaser) ===================== -->
+  <section class="how" id="calculadora">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow dark">Calcule seu evento</span>
+        <h2>Não sabe quanto pedir? A gente calcula pra você</h2>
+        <div class="rule"></div>
+        <p>Informe o número de convidados e receba uma sugestão de quantidades — cadeiras, mesas, pratos, talheres e
+          mais. É só ajustar e adicionar ao seu evento.</p>
+      </div>
+      <div class="teaser-center">
+        <button class="btn btn-verde" id="openCalcBtn">Calcular meu evento</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== GALERIA ===================== -->
+  <section id="galeria">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow dark">Galeria</span>
+        <h2>Eventos que já montamos</h2>
+        <div class="rule"></div>
+        <p>Um retrato do tipo de festa que a JD Eventos ajuda a montar.</p>
+      </div>
+      <!--
+      PARA A JD EVENTOS: não precisa mexer em código para colocar fotos aqui!
+      Basta criar uma pasta chamada "fotos" do lado deste arquivo index.html
+      e salvar cada foto com o nome exato mostrado na etiqueta 📷 do site
+      (ex: fotos/galeria-casamentos.jpg). A foto substitui o ícone sozinha.
+    -->
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <!--
+  PARA A JD EVENTOS: as respostas abaixo são um rascunho — escrevi de
+  forma genérica porque não sei seus prazos e políticas exatas de
+  reserva, cancelamento e danos. Me manda as informações reais que eu
+  atualizo os textos certinho.
+-->
+  <section class="how" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow dark">Dúvidas frequentes</span>
+        <h2>Perguntas que a gente mais recebe</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Com quanto tempo de antecedência devo reservar?</summary>
+          <p>Recomendamos reservar assim que a data do evento estiver definida, principalmente em datas concorridas como
+            fins de semana e feriados. Fale com a gente pelo WhatsApp para confirmar a disponibilidade dos itens que
+            você precisa.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Quais são as formas de pagamento?</summary>
+          <p>A maior parte dos itens é paga em dinheiro ou Pix, geralmente no momento da retirada. Alguns itens têm
+            condições específicas de pagamento — isso fica combinado com a nossa equipe na confirmação do seu pedido.
+          </p>
+        </details>
+        <details class="faq-item">
+          <summary>O que acontece se algum item quebrar ou for danificado?</summary>
+          <p>Todo material passa por conferência antes da entrega e na devolução. Caso algo seja danificado ou não
+            devolvido, isso é conversado diretamente com a nossa equipe para combinar a reposição.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Posso cancelar ou remarcar meu pedido?</summary>
+          <p>Sim — fale com a gente com a maior antecedência possível pelo WhatsApp para reorganizar a data ou os itens
+            do seu evento.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Vocês entregam e retiram o material?</summary>
+          <p>Não fazemos entrega nem retirada. A retirada e a devolução dos itens são combinadas diretamente com a nossa
+            equipe.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MAPA ===================== -->
+  <section id="localizacao">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow dark">Onde estamos</span>
+        <h2>Venha nos visitar em Suzano</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="map-wrap">
+        <iframe
+          src="https://www.google.com/maps?q=Av.+Gov.+Mario+Covas,+710+-+Vila+Amorim,+Suzano+-+SP,+08610-145&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localização da JD Eventos"></iframe>
+      </div>
+      <div class="map-below">
+        <p><strong>Av. Gov. Mario Covas, 710</strong> — Vila Amorim, Suzano - SP, 08610-145</p>
+        <a class="btn btn-outline-dark"
+          href="https://www.google.com/maps/dir/?api=1&destination=Av.+Gov.+Mario+Covas,+710+-+Vila+Amorim,+Suzano+-+SP,+08610-145"
+          target="_blank" rel="noopener">Como chegar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PEDIDO (teaser) ===================== -->
+  <section class="teaser dark" id="contrato">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Finalizar pedido</span>
+        <h2>Monte o contrato do seu evento</h2>
+        <div class="rule"></div>
+        <p>Preencha seus dados e veja o resumo do seu evento se montar sozinho, pronto para enviar.</p>
+      </div>
+      <div class="teaser-center">
+        <button class="btn btn-gold" id="openOrderBtn">Montar meu pedido</button>
+        <p class="teaser-note"><strong id="teaserCartCount">0</strong> itens selecionados até agora</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer id="contato">
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <span class="brand-name" style="font-family:'Cormorant Garamond',serif;font-size:24px;">JD Eventos</span>
+          <p>Locação de utensílios, mobiliário e buffet para festas em Suzano e região. Cada evento, montado com
+            cuidado.</p>
+        </div>
+        <div>
+          <h5>Contato</h5>
+          <ul>
+            <li><a href="mailto:jd.contatos@outlook.com">jd.contatos@outlook.com</a></li>
+            <li><a href="https://www.facebook.com/jdeventos.suzano" target="_blank"
+                rel="noopener">facebook.com/jdeventos.suzano</a></li>
+            <li><a href="https://wa.me/5511998187321" target="_blank" rel="noopener">Falar no WhatsApp</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Horário de funcionamento</h5>
+          <ul style="line-height:1.9;">
+            <li>Seg: 13:00 – 17:00</li>
+            <li>Ter: 10:00 – 17:00</li>
+            <li>Qua: 10:00 – 17:00</li>
+            <li>Qui: 10:00 – 17:00</li>
+            <li>Sex: 13:00 – 17:00</li>
+            <li>Sáb: 10:00 – 14:00</li>
+            <li>Dom: Fechada</li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-grid" style="grid-template-columns:1fr;margin-bottom:0;margin-top:-14px;">
+        <div>
+          <h5>Endereço</h5>
+          <ul>
+            <li>Av. Gov. Mario Covas, 710 — Vila Amorim, Suzano - SP, 08610-145, Brasil</li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© <span id="year"></span> JD Eventos — Locação para festas</span>
+        <span>Suzano - SP</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== MODAL: CATALOGO ===================== -->
+  <div class="modal-overlay" id="catalogOverlay" role="dialog" aria-modal="true" aria-label="Catálogo">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Catálogo</h2>
+        <button class="modal-close" id="catalogCloseBtn" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="policy-banner">
+          <span class="pb-icon">i</span>
+          <span>Os valores mostrados são aproximados e podem variar conforme a quantidade e a data do evento — o valor
+            final é sempre confirmado com a nossa equipe. Não fazemos entrega nem retirada: isso é combinado com a
+            cliente, e todo material passa por conferência.</span>
+        </div>
+        <div id="productList"></div>
+      </div>
+      <div class="modal-foot">
+        <span class="mf-count"><strong id="catalogFootCount">0</strong> itens no seu evento</span>
+        <button class="btn btn-verde" id="catalogToOrderBtn">Ver meu pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: CALCULADORA ===================== -->
+  <div class="modal-overlay" id="calcOverlay" role="dialog" aria-modal="true" aria-label="Calcule seu evento">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Calcule seu evento</h2>
+        <button class="modal-close" id="calcCloseBtn" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="calc-intro">Informe o número de convidados e veja uma sugestão inicial de quantidades. É uma
+          estimativa — você pode ajustar cada item antes de adicionar ao seu evento.</p>
+        <div class="calc-form">
+          <div class="field">
+            <label for="calc-convidados">Número de convidados</label>
+            <input type="number" id="calc-convidados" min="1" placeholder="Ex: 50">
+          </div>
+          <button type="button" class="btn btn-verde" id="calcRunBtn" style="height:42px;">Calcular sugestão</button>
+        </div>
+
+        <div id="calcResultsWrap" style="display:none;">
+          <div class="calc-results-head">
+            <h3>Sugestão para o seu evento</h3>
+            <button type="button" class="btn btn-gold" id="calcAddAllBtn">Adicionar todos ao meu evento</button>
+          </div>
+          <div id="calcResults"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: KITS PRONTOS ===================== -->
+  <div class="modal-overlay" id="kitsOverlay" role="dialog" aria-modal="true" aria-label="Kits prontos">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Kits prontos</h2>
+        <button class="modal-close" id="kitsCloseBtn" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="calc-intro">Combos com os itens mais usados para cada tipo de evento. Você pode adicionar o kit
+          inteiro e depois ajustar quantidades no seu pedido.</p>
+        <div class="kits-grid" id="kitsGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: DETALHES DO PRODUTO ===================== -->
+  <div class="modal-overlay" id="itemDetailOverlay" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
+    <div class="modal-box" style="max-width:560px;">
+      <div class="modal-head">
+        <h2 id="detailTitle">Produto</h2>
+        <button class="modal-close" id="detailCloseBtn" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-img" id="detailImgWrap"></div>
+        <div class="detail-meta">
+          <span class="tag" id="detailCatTag"></span>
+          <div class="price-row" id="detailPriceRow" style="margin:10px 0 4px;"></div>
+          <p class="note" id="detailNote" style="display:none;"></p>
+        </div>
+        <p class="detail-desc" id="detailDesc"></p>
+        <div class="card-foot" style="margin-top:18px;">
+          <div class="stepper" id="detailStepper">
+            <button type="button" class="dec" aria-label="Diminuir">–</button>
+            <input type="number" min="1" value="1" aria-label="Quantidade">
+            <button type="button" class="inc" aria-label="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn btn-verde" id="detailAddBtn" style="padding:11px 22px;">Adicionar ao meu
+            evento</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: DETALHES DO KIT ===================== -->
+  <div class="modal-overlay" id="kitDetailOverlay" role="dialog" aria-modal="true" aria-label="Detalhes do kit">
+    <div class="modal-box" style="max-width:560px;">
+      <div class="modal-head">
+        <h2 id="kitDetailTitle">Kit</h2>
+        <button class="modal-close" id="kitDetailCloseBtn" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-img" id="kitDetailImgWrap"></div>
+        <div class="detail-meta">
+          <span class="tag" id="kitDetailTag"></span>
+        </div>
+        <p class="detail-desc" id="kitDetailDesc"></p>
+        <div class="calc-results-head" style="margin-top:18px;">
+          <h3>Itens inclusos</h3>
+        </div>
+        <ul id="kitDetailList"
+          style="margin:0 0 18px;padding-left:18px;font-size:13.5px;color:var(--tinta-suave);line-height:1.9;"></ul>
+        <div class="price-row" id="kitDetailPriceRow" style="margin-bottom:16px;"></div>
+        <button type="button" class="btn btn-verde" id="kitDetailAddBtn"
+          style="width:100%;justify-content:center;">Adicionar kit ao meu evento</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: PEDIDO ===================== -->
+  <div class="modal-overlay" id="orderOverlay" role="dialog" aria-modal="true" aria-label="Meu pedido">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Meu pedido</h2>
+        <button class="modal-close" id="orderCloseBtn" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="orderAccountArea"></div>
+        <div class="sel-list">
+          <div class="sel-head-row">
+            <h3>Itens selecionados</h3>
+            <button type="button" id="addMoreBtn">+ adicionar mais itens</button>
+          </div>
+          <div id="selItems">
+            <p class="empty-msg">Sua lista está vazia. Adicione itens do catálogo para começar.</p>
+          </div>
+        </div>
+
+        <div class="contract-grid">
+          <div class="form-card">
+            <form id="orderForm">
+              <div class="field">
+                <label for="f-nome">Nome completo</label>
+                <input type="text" id="f-nome" required placeholder="Seu nome">
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-telefone">Telefone / WhatsApp</label>
+                  <input type="tel" id="f-telefone" required placeholder="(11) 90000-0000">
+                </div>
+                <div class="field">
+                  <label for="f-email">E-mail</label>
+                  <input type="email" id="f-email" placeholder="seuemail@exemplo.com">
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-tipo">Tipo de evento</label>
+                  <select id="f-tipo">
+                    <option>Aniversário</option>
+                    <option>Casamento</option>
+                    <option>Formatura</option>
+                    <option>Evento corporativo</option>
+                    <option>Confraternização</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="f-convidados">Nº de convidados</label>
+                  <input type="number" id="f-convidados" min="1" placeholder="Ex: 80">
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-data">Data do evento</label>
+                  <input type="date" id="f-data" required>
+                </div>
+                <div class="field">
+                  <label for="f-horario">Horário</label>
+                  <input type="time" id="f-horario">
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-endereco">Endereço do evento (ou "no salão da JD Eventos")</label>
+                <input type="text" id="f-endereco" placeholder="Rua, número, bairro, cidade">
+              </div>
+              <div class="field">
+                <label for="f-obs">Observações</label>
+                <textarea id="f-obs"
+                  placeholder="Cores, horário de montagem, alguma necessidade especial..."></textarea>
+              </div>
+              <p class="form-note">Este envio é um pedido de orçamento — os valores e a disponibilidade final são
+                confirmados pela nossa equipe antes da contratação.</p>
+              <div class="submit-row">
+                <button type="submit" class="btn btn-verde" id="sendWhats">Enviar pelo WhatsApp</button>
+                <button type="button" class="btn btn-outline-dark" id="sendEmail">Enviar por e-mail</button>
+              </div>
+            </form>
+
+            <div class="confirm-box" id="confirmBox">
+              <div class="check">✓</div>
+              <h3>Pedido enviado e encerrado</h3>
+              <p id="confirmText">Abrimos o WhatsApp com o resumo do seu evento já preenchido. É só conferir e apertar
+                enviar.</p>
+              <div class="submit-row" style="justify-content:center;">
+                <button class="btn btn-verde" id="viewHistoryAfterSend">Ver em Meus pedidos</button>
+                <button class="btn btn-outline-dark" id="newOrderAfterSend">Montar novo pedido</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="invite-card">
+            <div class="invite-inner">
+              <div class="invite-eyebrow">Resumo do evento</div>
+              <div class="invite-title" id="pvNome">Seu nome aqui</div>
+              <div class="invite-sub" id="pvDetalhes">Data · convidados · endereço</div>
+              <div class="invite-divider"></div>
+              <ul class="invite-list" id="pvList">
+                <li class="invite-empty" style="list-style:none;">Nenhum item selecionado ainda. Volte ao catálogo e
+                  escolha os itens do seu evento.</li>
+              </ul>
+              <div class="invite-total" id="pvTotal" style="display:none;">
+                <span>Total de itens</span><span id="pvTotalCount">0</span>
+              </div>
+              <div class="invite-total" id="pvSubtotal" style="display:none;">
+                <span>Subtotal aproximado</span><span id="pvSubtotalValue">R$ 0,00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: LOGIN / CADASTRO ===================== -->
+  <div class="modal-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-label="Entrar ou cadastrar">
+    <div class="modal-box" style="max-width:460px;">
+      <div class="modal-head">
+        <h2 id="authTitle">Minha conta</h2>
+        <button class="modal-close" id="authCloseBtn" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="auth-box">
+          <div class="auth-tabs">
+            <button type="button" class="auth-tab active" id="tabLogin">Entrar</button>
+            <button type="button" class="auth-tab" id="tabRegister">Criar conta</button>
+          </div>
+
+          <div class="auth-panel active" id="panelLogin">
+            <div class="auth-error" id="loginError"></div>
+            <form id="loginForm">
+              <div class="field">
+                <label for="li-login">E-mail ou telefone</label>
+                <input type="text" id="li-login" required placeholder="seuemail@exemplo.com">
+              </div>
+              <div class="field">
+                <label for="li-senha">Senha</label>
+                <input type="password" id="li-senha" required placeholder="Sua senha">
+              </div>
+              <div class="submit-row">
+                <button type="submit" class="btn btn-verde">Entrar</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="auth-panel" id="panelRegister">
+            <div class="auth-error" id="registerError"></div>
+            <form id="registerForm">
+              <div class="field">
+                <label for="rg-nome">Nome completo</label>
+                <input type="text" id="rg-nome" required placeholder="Seu nome">
+              </div>
+              <div class="field">
+                <label for="rg-email">E-mail</label>
+                <input type="email" id="rg-email" required placeholder="seuemail@exemplo.com">
+              </div>
+              <div class="field">
+                <label for="rg-telefone">Telefone / WhatsApp</label>
+                <input type="tel" id="rg-telefone" required placeholder="(11) 90000-0000">
+              </div>
+              <div class="field">
+                <label for="rg-senha">Crie uma senha</label>
+                <input type="password" id="rg-senha" required placeholder="Mínimo 4 caracteres">
+              </div>
+              <div class="submit-row">
+                <button type="submit" class="btn btn-verde">Criar minha conta</button>
+              </div>
+            </form>
+          </div>
+
+          <p class="auth-note">Seu cadastro fica salvo neste navegador e é usado para guardar o histórico dos seus
+            pedidos com a JD Eventos. Você pode navegar pelo site e montar seu evento sem cadastro — o login só é pedido
+            na hora de concluir o pedido.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: MEUS PEDIDOS ===================== -->
+  <div class="modal-overlay" id="ordersOverlay" role="dialog" aria-modal="true" aria-label="Meus pedidos">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2>Meus pedidos</h2>
+        <button class="modal-close" id="ordersCloseBtn" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="ordersHistoryList" class="orders-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== BOTÃO FLUTUANTE WHATSAPP ===================== -->
+  <a class="wa-float" id="waFloat"
+    href="https://wa.me/5511998187321?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20JD%20Eventos%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
+    target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+    <span class="wa-label">Fale no WhatsApp</span>
+  </a>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ---------------- ICONS (line-art, elegant placeholders) ---------------- */
+    const ICONS = {
+      "Mobiliário": `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 9 L21 29 Q21 33 25 33 L39 33 Q43 33 43 29 L43 9" />
+    <line x1="17" y1="33" x2="47" y2="33" />
+    <line x1="20" y1="33" x2="18" y2="55" />
+    <line x1="44" y1="33" x2="46" y2="55" />
+    <line x1="24" y1="41" x2="40" y2="41" />
+  </svg>`,
+      "Toalhas & Capas": `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="32" cy="18" rx="21" ry="7" />
+    <path d="M11 18 Q10 40 16 54 M53 18 Q54 40 48 54 M16 54 Q32 60 48 54" />
+    <path d="M20 22 Q19 38 22 50 M32 24 Q31 40 32 52 M44 22 Q45 38 42 50" />
+  </svg>`,
+      "Louças & Talheres": `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="32" r="17" />
+    <circle cx="32" cy="32" r="10" />
+    <path d="M12 14 L12 26 M9 14 L9 26 M15 14 L15 26 M9 26 Q9 30 12 30 L12 50" />
+    <path d="M52 14 C56 16 56 24 52 26 L52 50" />
+  </svg>`,
+      "Copos & Taças": `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 10 Q22 26 32 30 Q42 26 42 10 Z" />
+    <line x1="32" y1="30" x2="32" y2="48" />
+    <line x1="20" y1="54" x2="44" y2="54" />
+    <line x1="32" y1="48" x2="32" y2="54" />
+  </svg>`,
+      "Buffet & Serviço": `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 34 Q14 16 32 16 Q50 16 50 34" />
+    <circle cx="32" cy="14" r="2.2" fill="currentColor" stroke="none" />
+    <rect x="10" y="34" width="44" height="10" rx="2" />
+    <line x1="16" y1="44" x2="16" y2="50" />
+    <line x1="48" y1="44" x2="48" y2="50" />
+    <line x1="10" y1="50" x2="54" y2="50" />
+  </svg>`,
+      "Doces & Decoração de mesa": `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="32" cy="16" rx="10" ry="3.2" />
+    <line x1="32" y1="19" x2="32" y2="27" />
+    <ellipse cx="32" cy="30" rx="16" ry="3.6" />
+    <line x1="32" y1="34" x2="32" y2="42" />
+    <ellipse cx="32" cy="46" rx="22" ry="4.2" />
+  </svg>`,
+      "Chá revelação": `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 32 L14 18 Q10 26 14 32 Q10 38 14 46 Z" />
+    <path d="M32 32 L50 18 Q54 26 50 32 Q54 38 50 46 Z" />
+    <circle cx="32" cy="32" r="4" fill="currentColor" stroke="none" />
+    <line x1="32" y1="36" x2="30" y2="50" />
+    <line x1="32" y1="36" x2="34" y2="50" />
+  </svg>`
+    };
+
+    /* ---------------- DATA ---------------- */
+    const CATALOG = [
+      {
+        category: "Mobiliário",
+        items: [
+          { id: "cad-plastico", name: "Cadeira de plástico avulsa", desc: "Cadeira avulsa, ideal para eventos simples. Pagamento em dinheiro ou Pix.", price: 2.00 },
+          { id: "cad-ferro", name: "Cadeira de ferro", desc: "Estrutura reforçada, acabamento mais elegante. Pagamento em dinheiro.", price: 6.00 },
+          { id: "mesa-plastico", name: "Mesa de plástico avulsa", desc: "Mesa avulsa para retirada.", price: 5.00 },
+          { id: "mesa-pranchao", name: "Mesa pranchão", desc: "Base de mesa pranchão, medida aproximada de 2,20m.", price: 20.00 },
+          { id: "tampo-6pessoas", name: "Tampo de mesa (6 a 8 pessoas)", desc: "Locação do tampo, usado com o suporte de ferro.", price: 5.00 },
+          { id: "tampo-115", name: "Tampo de mesa 1,15m", desc: "Pode ser usado com o suporte de ferro.", price: null },
+          { id: "suporte-tampo", name: "Suporte para tampo", desc: "Suporte de ferro que serve como os pés da mesa.", price: 5.00 },
+        ]
+      },
+      {
+        category: "Toalhas & Capas",
+        items: [
+          { id: "toalha-lisa", name: "Toalha pra tampo lisa", desc: "Toalha para tampo lisa, em várias cores.", price: 12.00 },
+          { id: "toalha-jacquard", name: "Toalha pra tampo jacquard", desc: "Nas cores pérola, champanhe, rosé e outras.", price: 15.00 },
+          { id: "toalha-oxford", name: "Toalha pra tampo em Oxford", desc: "Base em toalha branca + toalha quadrada Oxford por cima.", price: 16.00 },
+          { id: "toalha-redonda", name: "Toalha redonda branca", desc: "Toalha redonda branca para tampo.", price: 15.00 },
+          { id: "toalha-colorida", name: "Toalha pra tampo colorida", desc: "Toalhas de 2,80m, em várias cores.", price: 12.00 },
+          { id: "toalha-quadrada", name: "Toalha quadrada 1,45x1,45", desc: "Toalhas quadradas em várias cores.", price: 6.00 },
+          { id: "toalha-pranchao", name: "Toalha pranchão", desc: "Toalha para mesa pranchão, na cor branca e outras.", price: 20.00 },
+          { id: "toalha-cobre-mancha", name: "Toalha p/ tampo + cobre-mancha", desc: "Toalha redonda branca com cobre-mancha, pronta para decorar.", price: 15.00 },
+          { id: "capa-cadeira", name: "Capa de cadeira", desc: "Capa branca para uso em salão, dá um toque especial às cadeiras.", price: null },
+          { id: "guardanapos", name: "Guardanapos", desc: "Guardanapos de tecido, nas texturas Oxford e jacquard.", price: 0.80 },
+        ]
+      },
+      {
+        category: "Louças & Talheres",
+        items: [
+          { id: "prato-mesa", name: "Prato de mesa (refeição)", desc: "Prato de porcelana branco, para refeição.", price: 0.50 },
+          { id: "prato-sobremesa", name: "Prato de sobremesa", desc: "Prato de sobremesa em porcelana branca.", price: 0.50 },
+          { id: "prato-trabalhado", name: "Prato de mesa trabalhado", desc: "Prato de porcelana branco com trabalho na borda.", price: 0.70 },
+          { id: "talheres", name: "Talheres de mesa e sobremesa", desc: "Garfo, faca e colher de mesa e sobremesa.", price: 0.50 },
+          { id: "travessa-oval", name: "Travessa oval grande", desc: "Travessa oval grande, ideal para saladas.", price: 3.00 },
+          { id: "travessa-folha-p", name: "Travessa folha (P)", desc: "Travessa em formato de folha, medida aproximada 35x9cm.", price: 8.00 },
+          { id: "travessa-vidro-folha", name: "Travessa de vidro folha", desc: "Travessa de vidro em formato de folha, medida aprox. 43x12cm.", price: 10.00 },
+          { id: "travessa-melamina", name: "Travessa folha melamina", desc: "Travessa em melamina, no formato de folha.", price: 10.00 },
+        ]
+      },
+      {
+        category: "Copos & Taças",
+        items: [
+          { id: "taca-gallant", name: "Taça gallant", desc: "Locação mínima de 12 unidades.", price: 0.50, note: "Mínimo 12 unidades" },
+          { id: "taca-paulista", name: "Taça paulista", desc: "Locação mínima de 12 unidades.", price: 0.50, note: "Mínimo 12 unidades" },
+          { id: "taca-diamante", name: "Taça diamante 320ml", desc: "Locação mínima de 12 unidades.", price: 0.70, note: "Mínimo 12 unidades" },
+          { id: "copo-coquetel", name: "Copo de coquetel 100ml", desc: "Locação mínima de 12 unidades.", price: 0.50, note: "Mínimo 12 unidades" },
+          { id: "copo-cylinder", name: "Copo Cylinder 300ml", desc: "Locação mínima de 12 unidades.", price: 0.50, note: "Mínimo 12 unidades" },
+          { id: "copo-whisky", name: "Copo de whisky 250ml", desc: "Locação mínima de 12 unidades.", price: 0.50, note: "Mínimo 12 unidades" },
+          { id: "copo-chopp", name: "Copo de chopp", desc: "Locação mínima de 12 unidades.", price: 0.50, note: "Mínimo 12 unidades" },
+        ]
+      },
+      {
+        category: "Buffet & Serviço",
+        items: [
+          { id: "rechaud-redondo", name: "Réchaud redondo", desc: "Disponível em 3 modelos.", price: 30.00 },
+          { id: "rechaud-mesa", name: "Réchaud de mesa (1 ou 2 bocas)", desc: "Retirada com pagamento em dinheiro.", price: 30.00 },
+          { id: "suqueira-3l", name: "Suqueira de vidro 3 litros", desc: "Suqueira de vidro, capacidade de 3 litros.", price: 10.00, priceOld: 15.00 },
+          { id: "suqueira-5l", name: "Suqueira de vidro 5 litros", desc: "Suqueira de vidro, capacidade de 5 litros.", price: 40.00 },
+          { id: "suqueira-18l", name: "Suqueira de vidro 1,8 litros", desc: "Suqueira de vidro, capacidade de 1,8 litros.", price: 25.00 },
+          { id: "garrafa-19", name: "Garrafa térmica 1,9 litros", desc: "Garrafa térmica em aço inox.", price: 20.00 },
+          { id: "botijao-termico", name: "Botijão térmico (5 litros)", desc: "Garrafa térmica com capacidade de 5 litros.", price: 40.00 },
+          { id: "balde-gelo", name: "Balde de gelo", desc: "Pagamento em dinheiro na retirada.", price: 5.00 },
+          { id: "jarra-vidro", name: "Jarra de vidro 1,5 litro", desc: "Pagamento em dinheiro na retirada.", price: 3.00 },
+          { id: "bandeja-garcom", name: "Bandeja pra garçom", desc: "Em inox ou outro modelo, à escolha.", price: 3.00 },
+          { id: "utensilios-servir", name: "Utensílios de servir", desc: "Colher grande, concha pequena e outros utensílios.", price: 1.50 },
+        ]
+      },
+      {
+        category: "Doces & Decoração de mesa",
+        items: [
+          { id: "boleira-espelhado", name: "Boleira e suporte de doces espelhado", desc: "Peças novas para decorar a mesa de doces.", price: null },
+          { id: "boleira-doceira-escada", name: "Boleira, doceira e escada de doces", desc: "Conjunto para montar a mesa de doces.", price: null },
+          { id: "bandeja-doces-acrilico", name: "Bandeja de doces em acrílico", desc: "Com 2 ou 3 andares.", price: 10.00, priceOld: 15.00 },
+          { id: "boleira-lirio", name: "Boleira de vidro lírio", desc: "Medida aproximada 30x12,5cm.", price: 10.00 },
+          { id: "boleira-flor", name: "Boleira de vidro flor", desc: "Medida aproximada 35x10cm.", price: 10.00 },
+          { id: "sousplast-ratan", name: "Sousplast de ratan", desc: "Locação de sousplast de ratan, somente para eventos.", price: 2.50, priceOld: 3.00 },
+        ]
+      },
+      {
+        category: "Chá revelação",
+        items: [
+          { id: "lanca-papel", name: "Lança papel", desc: "Opções para menino ou menina.", price: null },
+        ]
+      }
+    ];
+
+    const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+
+    /* Lookup rápido de qualquer item do catálogo pelo id, usado pela calculadora */
+    const CATALOG_FLAT = {};
+    CATALOG.forEach(group => {
+      group.items.forEach(item => { CATALOG_FLAT[item.id] = { ...item, category: group.category }; });
+    });
+
+    /* =====================================================================
+       📷 MAPA DE FOTOS DO SITE — PREENCHA AQUI PARA ADICIONAR IMAGENS
+       =====================================================================
+       Para cada linha abaixo, troque "null" pelo caminho do arquivo da foto.
+       Exemplo:
+           "cad-plastico": null,               <- sem foto (mostra ícone)
+           "cad-plastico": "fotos/cadeira-plastico.jpg",   <- com foto
+    
+       1) Crie uma pasta chamada "fotos" na mesma pasta onde está este
+          arquivo index.html.
+       2) Coloque as fotos dentro dela (formato .jpg ou .png).
+       3) Escreva o nome do arquivo aqui, entre aspas, no lugar de "null".
+       4) Salve o arquivo. Pronto — a foto substitui o ícone automaticamente.
+    
+       Dica: use Ctrl+F (ou Cmd+F no Mac) e procure por "null" neste bloco
+       para pular rapidamente de item em item.
+       ===================================================================== */
+
+    /* ---- Fotos de cada produto do catálogo (uma linha por item) ---- */
+    const PRODUCT_IMAGES = {};
+    CATALOG.forEach(group => {
+      group.items.forEach(item => { PRODUCT_IMAGES[item.id] = null; });
+    });
+
+    /* ---- Fotos da seção Galeria (uma por tipo de evento) ---- */
+    const GALLERY_IMAGES = {
+      "Aniversários": null,
+      "Casamentos": null,
+      "Chá revelação": null,
+      "Formaturas": null,
+      "Eventos corporativos": null,
+      "Confraternizações": null,
+    };
+
+    /* ---- Foto de capa (topo do site, atrás do título) — opcional ---- */
+    const HERO_IMAGE = null; // ex: "fotos/capa.jpg"
+
+    /* ---------------- STATE ---------------- */
+    let cart = {}; // id -> { name, category, qty, price }
+
+    /* ---------------- MODO ESCURO ---------------- */
+    const THEME_KEY = 'jdeventos_theme';
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+    function setTheme(isDark) {
+      document.documentElement.classList.toggle('dark-mode', isDark);
+      try { localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light'); } catch (e) { }
+      themeToggleBtn.setAttribute('aria-label', isDark ? 'Ativar modo claro' : 'Ativar modo escuro');
+      themeToggleBtn.setAttribute('title', isDark ? 'Ativar modo claro' : 'Ativar modo escuro');
+    }
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      setTheme(!isDark);
+    });
+    // sincroniza o rótulo do botão com o tema já aplicado no <head>
+    setTheme(document.documentElement.classList.contains('dark-mode'));
+
+    /* ---------------- MENU HAMBÚRGUER ---------------- */
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navDropdown = document.getElementById('navDropdown');
+
+    function toggleNavMenu(forceState) {
+      const isOpen = typeof forceState === 'boolean' ? forceState : !navDropdown.classList.contains('open');
+      navDropdown.classList.toggle('open', isOpen);
+      hamburgerBtn.classList.toggle('open', isOpen);
+      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    }
+    hamburgerBtn.addEventListener('click', () => toggleNavMenu());
+    // fecha o menu ao escolher qualquer item dentro dele
+    navDropdown.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('click', () => toggleNavMenu(false));
+    });
+    // fecha ao clicar fora do menu
+    document.addEventListener('click', (e) => {
+      if (navDropdown.classList.contains('open') && !navDropdown.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+        toggleNavMenu(false);
+      }
+    });
+
+    /* ---------------- AUTH / ACCOUNTS (armazenado neste navegador) ---------------- */
+    /* AVISO: isto é um cadastro simples salvo no localStorage do navegador do
+       cliente — ótimo para testar o fluxo, mas não é um banco de dados real:
+       cada pessoa só vê o próprio histórico no próprio aparelho/navegador, e
+       as senhas não ficam protegidas como em um sistema com servidor de verdade.
+       Para uma versão em produção, o ideal é migrar isso para um backend com
+       autenticação segura. */
+    const USERS_KEY = 'jdeventos_users';
+    const SESSION_KEY = 'jdeventos_session';
+    const ORDERS_KEY = 'jdeventos_orders';
+
+    function loadUsers() {
+      try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; }
+      catch (e) { return {}; }
+    }
+    function saveUsers(users) { localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
+
+    function loadAllOrders() {
+      try { return JSON.parse(localStorage.getItem(ORDERS_KEY)) || {}; }
+      catch (e) { return {}; }
+    }
+    function saveAllOrders(all) { localStorage.setItem(ORDERS_KEY, JSON.stringify(all)); }
+
+    function getSession() { return localStorage.getItem(SESSION_KEY) || null; }
+    function setSession(email) { if (email) { localStorage.setItem(SESSION_KEY, email); } else { localStorage.removeItem(SESSION_KEY); } }
+
+    function currentUser() {
+      const email = getSession();
+      if (!email) return null;
+      const users = loadUsers();
+      return users[email] || null;
+    }
+
+    function normalizeKey(v) { return (v || '').trim().toLowerCase(); }
+
+    const accountBtn = document.getElementById('accountBtn');
+    const authOverlay = document.getElementById('authOverlay');
+    const ordersOverlay = document.getElementById('ordersOverlay');
+    const orderAccountArea = document.getElementById('orderAccountArea');
+
+    function renderAccountState() {
+      const user = currentUser();
+      if (user) {
+        accountBtn.textContent = `Olá, ${user.nome.split(' ')[0]}`;
+      } else {
+        accountBtn.textContent = 'Entrar';
+      }
+      renderOrderAccountArea();
+    }
+
+    function renderOrderAccountArea() {
+      const user = currentUser();
+      if (user) {
+        orderAccountArea.innerHTML = `
+      <div class="account-summary">
+        <span>Pedido em nome de <strong>${user.nome}</strong> (${user.email})</span>
+        <div class="as-actions">
+          <button type="button" id="viewMyOrdersBtn">ver meus pedidos</button>
+          <button type="button" class="logout" id="logoutFromOrderBtn">sair</button>
+        </div>
+      </div>
+    `;
+        document.getElementById('viewMyOrdersBtn').addEventListener('click', openOrdersHistoryModal);
+        document.getElementById('logoutFromOrderBtn').addEventListener('click', () => {
+          setSession(null);
+          renderAccountState();
+          showToast('Você saiu da sua conta.');
+        });
+        // pré-preenche os dados de contato com os da conta, se estiverem vazios
+        const fNome = document.getElementById('f-nome');
+        const fTelefone = document.getElementById('f-telefone');
+        const fEmail = document.getElementById('f-email');
+        if (!fNome.value) fNome.value = user.nome;
+        if (!fTelefone.value) fTelefone.value = user.telefone;
+        if (!fEmail.value) fEmail.value = user.email;
+        renderInvitePreview();
+      } else {
+        orderAccountArea.innerHTML = `
+      <div class="gate-banner">
+        <span>Faça login ou crie uma conta para <strong>concluir o pedido</strong> — assim guardamos o histórico dos seus eventos com a JD Eventos.</span>
+        <button type="button" class="btn btn-verde" id="gateLoginBtn" style="padding:9px 18px;">Entrar / cadastrar</button>
+      </div>
+    `;
+        document.getElementById('gateLoginBtn').addEventListener('click', openAuthModal);
+      }
+    }
+
+    /* ---------------- AUTH MODAL ---------------- */
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const panelLogin = document.getElementById('panelLogin');
+    const panelRegister = document.getElementById('panelRegister');
+    const loginError = document.getElementById('loginError');
+    const registerError = document.getElementById('registerError');
+
+    function showAuthTab(tab) {
+      const isLogin = tab === 'login';
+      tabLogin.classList.toggle('active', isLogin);
+      tabRegister.classList.toggle('active', !isLogin);
+      panelLogin.classList.toggle('active', isLogin);
+      panelRegister.classList.toggle('active', !isLogin);
+      loginError.classList.remove('show');
+      registerError.classList.remove('show');
+    }
+    tabLogin.addEventListener('click', () => showAuthTab('login'));
+    tabRegister.addEventListener('click', () => showAuthTab('register'));
+
+    function openAuthModal(defaultTab) {
+      showAuthTab(defaultTab || 'login');
+      openModal(authOverlay);
+    }
+    function closeAuthModal() { closeModal(authOverlay); }
+    document.getElementById('accountBtn').addEventListener('click', () => {
+      if (currentUser()) {
+        openOrdersHistoryModal();
+      } else {
+        openAuthModal('login');
+      }
+    });
+    document.getElementById('authCloseBtn').addEventListener('click', closeAuthModal);
+    authOverlay.addEventListener('click', (e) => { if (e.target === authOverlay) closeAuthModal(); });
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const loginVal = normalizeKey(document.getElementById('li-login').value);
+      const senha = document.getElementById('li-senha').value;
+      const users = loadUsers();
+      const user = users[loginVal] || Object.values(users).find(u => normalizeKey(u.telefone) === loginVal);
+      if (!user || user.senha !== senha) {
+        loginError.textContent = 'E-mail/telefone ou senha incorretos.';
+        loginError.classList.add('show');
+        return;
+      }
+      setSession(user.email);
+      closeAuthModal();
+      renderAccountState();
+      showToast(`Bem-vindo(a) de volta, ${user.nome.split(' ')[0]}!`);
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('rg-nome').value.trim();
+      const email = normalizeKey(document.getElementById('rg-email').value);
+      const telefone = document.getElementById('rg-telefone').value.trim();
+      const senha = document.getElementById('rg-senha').value;
+
+      if (senha.length < 4) {
+        registerError.textContent = 'A senha precisa ter pelo menos 4 caracteres.';
+        registerError.classList.add('show');
+        return;
+      }
+      const users = loadUsers();
+      if (users[email]) {
+        registerError.textContent = 'Já existe uma conta com este e-mail. Tente entrar.';
+        registerError.classList.add('show');
+        return;
+      }
+      users[email] = { nome, email, telefone, senha, createdAt: new Date().toISOString() };
+      saveUsers(users);
+      setSession(email);
+      closeAuthModal();
+      renderAccountState();
+      showToast(`Conta criada! Bem-vindo(a), ${nome.split(' ')[0]}.`);
+    });
+
+    /* ---------------- MEUS PEDIDOS (histórico) ---------------- */
+    function openOrdersHistoryModal() {
+      const user = currentUser();
+      const list = document.getElementById('ordersHistoryList');
+      if (!user) {
+        list.innerHTML = '<p class="empty-msg">Entre na sua conta para ver seu histórico de pedidos.</p>';
+        openModal(ordersOverlay);
+        return;
+      }
+      const allOrders = loadAllOrders();
+      const orders = (allOrders[user.email] || []).slice().reverse();
+      if (orders.length === 0) {
+        list.innerHTML = '<p class="empty-msg">Você ainda não enviou nenhum pedido.</p>';
+      } else {
+        list.innerHTML = orders.map((o, idx) => {
+          const itemsHtml = o.items.map(it => `<li>${it.name} × ${it.qty}${it.price != null ? ` — R$ ${(it.price * it.qty).toFixed(2).replace('.', ',')}` : ' — sob consulta'}</li>`).join('');
+          const enviado = new Date(o.createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+          return `
+        <div class="order-card">
+          <div class="order-card-head">
+            <h4>${o.tipo || 'Evento'}${o.dataEvento ? ' — ' + o.dataEvento : ''}</h4>
+            <span>enviado em ${enviado}</span>
+          </div>
+          <p>${o.convidados ? o.convidados + ' convidados · ' : ''}${o.endereco || 'Endereço não informado'}</p>
+          <p><strong>Subtotal aproximado:</strong> R$ ${o.subtotal.toFixed(2).replace('.', ',')}${o.hasConsulta ? ' + itens sob consulta' : ''}</p>
+          <ul>${itemsHtml}</ul>
+          <div class="submit-row" style="margin-top:12px;">
+            <button type="button" class="btn btn-outline-dark use-again-btn" data-idx="${idx}" style="padding:9px 16px;font-size:11px;">Usar estes itens novamente</button>
+          </div>
+        </div>
+      `;
+        }).join('');
+        list.querySelectorAll('.use-again-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const order = orders[parseInt(btn.dataset.idx)];
+            cart = {};
+            order.items.forEach(it => {
+              if (!it.id) return;
+              const catalogItem = CATALOG_FLAT[it.id];
+              cart[it.id] = {
+                name: it.name,
+                category: it.category,
+                qty: it.qty,
+                price: catalogItem ? catalogItem.price : it.price
+              };
+            });
+            renderCart();
+            showToast('Itens desse pedido adicionados ao seu evento atual.');
+            closeModal(ordersOverlay);
+            openOrderModal();
+          });
+        });
+      }
+      openModal(ordersOverlay);
+    }
+    document.getElementById('ordersCloseBtn').addEventListener('click', () => closeModal(ordersOverlay));
+    ordersOverlay.addEventListener('click', (e) => { if (e.target === ordersOverlay) closeModal(ordersOverlay); });
+
+    function saveOrderToHistory() {
+      const user = currentUser();
+      if (!user) return;
+      const ids = Object.keys(cart);
+      let subtotal = 0;
+      let hasConsulta = false;
+      const items = ids.map(id => {
+        const it = cart[id];
+        if (it.price == null) hasConsulta = true; else subtotal += it.price * it.qty;
+        return { id, name: it.name, category: it.category, qty: it.qty, price: it.price };
+      });
+      const order = {
+        tipo: document.getElementById('f-tipo').value,
+        convidados: document.getElementById('f-convidados').value,
+        dataEvento: document.getElementById('f-data').value,
+        horario: document.getElementById('f-horario').value,
+        endereco: document.getElementById('f-endereco').value.trim(),
+        obs: document.getElementById('f-obs').value.trim(),
+        items, subtotal, hasConsulta,
+        createdAt: new Date().toISOString()
+      };
+      const allOrders = loadAllOrders();
+      if (!allOrders[user.email]) allOrders[user.email] = [];
+      allOrders[user.email].push(order);
+      saveAllOrders(allOrders);
+    }
+
+
+    /* ---------------- POP-UP DE DETALHES (produto e kit) ---------------- */
+    function openItemDetail(item, category) {
+      document.getElementById('detailTitle').textContent = item.name;
+      document.getElementById('detailCatTag').textContent = category;
+      const priceHtml = item.price == null
+        ? `<span class="price consulta">Sob consulta</span>`
+        : `${item.priceOld ? `<span class="price-old">R$ ${item.priceOld.toFixed(2).replace('.', ',')}</span>` : ''}<span class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>`;
+      document.getElementById('detailPriceRow').innerHTML = priceHtml;
+      const noteEl = document.getElementById('detailNote');
+      if (item.note) { noteEl.textContent = item.note; noteEl.style.display = 'block'; }
+      else { noteEl.style.display = 'none'; }
+      document.getElementById('detailDesc').textContent = item.desc;
+      document.getElementById('detailImgWrap').innerHTML = `
+    <img class="img-slot-photo" src="fotos/${item.id}.jpg" alt="${item.name}" loading="lazy"
+         onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+         onerror="this.style.display='none';">
+    <div class="img-slot-fallback">
+      ${ICONS[category] || ''}
+      <span class="img-slot-tag">📷 fotos/${item.id}.jpg</span>
+    </div>
+  `;
+      const qtyInput = document.querySelector('#detailStepper input');
+      qtyInput.value = 1;
+      document.querySelector('#detailStepper .dec').onclick = () => {
+        qtyInput.value = Math.max(1, parseInt(qtyInput.value || 1) - 1);
+      };
+      document.querySelector('#detailStepper .inc').onclick = () => {
+        qtyInput.value = parseInt(qtyInput.value || 1) + 1;
+      };
+      const addBtn = document.getElementById('detailAddBtn');
+      addBtn.textContent = 'Adicionar ao meu evento';
+      addBtn.onclick = () => {
+        const qty = Math.max(1, parseInt(qtyInput.value || 1));
+        cart[item.id] = { name: item.name, category, qty, price: item.price };
+        renderCart();
+        showToast(`${item.name} adicionado ao seu evento`);
+        addBtn.textContent = 'Adicionado ✓';
+        setTimeout(() => { addBtn.textContent = 'Adicionar ao meu evento'; }, 1400);
+      };
+      openStackedModal(itemDetailOverlay);
+    }
+
+    function openKitDetail(kit) {
+      document.getElementById('kitDetailTitle').textContent = kit.name;
+      document.getElementById('kitDetailTag').textContent = kit.tag;
+      document.getElementById('kitDetailDesc').textContent = kit.desc;
+      document.getElementById('kitDetailImgWrap').innerHTML = `
+    <img class="img-slot-photo" src="fotos/${kit.id}.jpg" alt="${kit.name}" loading="lazy"
+         onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+         onerror="this.style.display='none';">
+    <div class="img-slot-fallback">
+      ${KIT_ICON_MAP[kit.tag] || ''}
+      <span class="img-slot-tag">📷 fotos/${kit.id}.jpg</span>
+    </div>
+  `;
+      let subtotal = 0;
+      let hasConsulta = false;
+      const listHtml = kit.items.map(entry => {
+        const item = CATALOG_FLAT[entry.id];
+        if (!item) return '';
+        if (item.price == null) hasConsulta = true; else subtotal += item.price * entry.qty;
+        return `<li>${item.name} × ${entry.qty}</li>`;
+      }).join('');
+      document.getElementById('kitDetailList').innerHTML = listHtml;
+      document.getElementById('kitDetailPriceRow').innerHTML = `
+    <span class="price">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+    ${hasConsulta ? '<span class="price-old" style="text-decoration:none;">+ itens sob consulta</span>' : ''}
+  `;
+      const kitAddBtn = document.getElementById('kitDetailAddBtn');
+      kitAddBtn.textContent = 'Adicionar kit ao meu evento';
+      kitAddBtn.onclick = () => {
+        kit.items.forEach(entry => {
+          const item = CATALOG_FLAT[entry.id];
+          if (!item) return;
+          cart[entry.id] = { name: item.name, category: item.category, qty: entry.qty, price: item.price };
+        });
+        renderCart();
+        showToast(`${kit.name} adicionado ao seu evento!`);
+        closeStackedModal(kitDetailOverlay);
+        closeKitsModal();
+        openOrderModal();
+      };
+      openStackedModal(kitDetailOverlay);
+    }
+
+    /* ---------------- RENDER CATALOG ---------------- */
+    const productList = document.getElementById('productList');
+    CATALOG.forEach((group, gi) => {
+      const label = document.createElement('div');
+      label.className = 'course-label';
+      label.innerHTML = `<span class="num">${ROMAN[gi] || (gi + 1)}</span><span class="cl-icon">${ICONS[group.category] || ''}</span><h3>${group.category}</h3><span class="ln"></span>`;
+      productList.appendChild(label);
+
+      const grid = document.createElement('div');
+      grid.className = 'grid-products';
+
+      group.items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        const priceHtml = item.price == null
+          ? `<span class="price consulta">Sob consulta</span>`
+          : `${item.priceOld ? `<span class="price-old">R$ ${item.priceOld.toFixed(2).replace('.', ',')}</span>` : ''}<span class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>`;
+        card.innerHTML = `
+      <div class="card-img">
+        <img class="img-slot-photo" src="fotos/${item.id}.jpg" alt="${item.name}" loading="lazy"
+             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+             onerror="this.style.display='none';">
+        <div class="img-slot-fallback">
+          ${ICONS[group.category] || ''}
+          <span class="img-slot-tag">📷 fotos/${item.id}.jpg</span>
+        </div>
+      </div>
+      <div class="card-top">
+        <h4>${item.name}</h4>
+        <span class="tag">Locação</span>
+      </div>
+      <p>${item.desc}</p>
+      ${item.note ? `<p class="note">${item.note}</p>` : ''}
+      <div class="price-row">${priceHtml}</div>
+      <div class="card-foot">
+        <div class="stepper">
+          <button type="button" class="dec" aria-label="Diminuir">–</button>
+          <input type="number" min="1" value="1" aria-label="Quantidade">
+          <button type="button" class="inc" aria-label="Aumentar">+</button>
+        </div>
+        <button type="button" class="add-btn">Adicionar</button>
+      </div>
+    `;
+        const qtyInput = card.querySelector('input');
+        card.querySelector('.dec').addEventListener('click', () => {
+          qtyInput.value = Math.max(1, parseInt(qtyInput.value || 1) - 1);
+        });
+        card.querySelector('.inc').addEventListener('click', () => {
+          qtyInput.value = parseInt(qtyInput.value || 1) + 1;
+        });
+        const addBtn = card.querySelector('.add-btn');
+        addBtn.addEventListener('click', () => {
+          const qty = Math.max(1, parseInt(qtyInput.value || 1));
+          cart[item.id] = { name: item.name, category: group.category, qty, price: item.price };
+          renderCart();
+          showToast(`${item.name} adicionado ao seu evento`);
+          addBtn.textContent = 'Adicionado ✓';
+          addBtn.classList.add('added');
+          setTimeout(() => { addBtn.textContent = 'Adicionar'; addBtn.classList.remove('added'); }, 1400);
+        });
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.card-foot')) return;
+          openItemDetail(item, group.category);
+        });
+        grid.appendChild(card);
+      });
+      productList.appendChild(grid);
+    });
+
+    /* teaser icon row on the main page */
+    const teaserIcons = document.getElementById('teaserIcons');
+    CATALOG.forEach(group => {
+      const el = document.createElement('div');
+      el.className = 'ti';
+      el.title = group.category;
+      el.innerHTML = ICONS[group.category] || '';
+      teaserIcons.appendChild(el);
+    });
+
+    /* ---------------- GALERIA (placeholders — trocar por fotos reais depois) ---------------- */
+    const GALLERY_ICON_BDAY = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14 30 h36 v20 a2 2 0 0 1-2 2 H16 a2 2 0 0 1-2-2 Z" />
+  <path d="M14 38 q4 -4 8 0 q4 4 8 0 q4 -4 8 0 q4 4 8 0" />
+  <line x1="32" y1="30" x2="32" y2="16" />
+  <path d="M28 12 q4 -6 8 0 q-4 2 -4 6 q0 -4 -4 -6Z" />
+</svg>`;
+    const GALLERY_ICON_WEDDING = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="24" cy="36" r="10" />
+  <circle cx="40" cy="36" r="10" />
+</svg>`;
+    const GALLERY_ICON_GRAD = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 24 L32 14 L58 24 L32 34 Z" />
+  <path d="M18 29 v12 q14 8 28 0 v-12" />
+  <line x1="58" y1="24" x2="58" y2="40" />
+</svg>`;
+    const GALLERY_ICON_CORP = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="12" y="20" width="40" height="30" rx="2" />
+  <line x1="12" y1="30" x2="52" y2="30" />
+  <line x1="26" y1="20" x2="26" y2="14" />
+  <line x1="38" y1="20" x2="38" y2="14" />
+</svg>`;
+    const GALLERY_ICON_TOAST = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 12 L22 34 Q22 40 28 40 Q34 40 34 34 L40 12 Z" />
+  <line x1="28" y1="40" x2="28" y2="50" />
+  <line x1="20" y1="50" x2="36" y2="50" />
+  <path d="M44 20 L48 38 Q48 43 53 43 Q58 43 58 38 L58 20 Z" />
+  <line x1="53" y1="43" x2="53" y2="50" />
+</svg>`;
+
+    const GALLERY_ITEMS = [
+      { slug: "aniversarios", label: "Aniversários", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_BDAY },
+      { slug: "casamentos", label: "Casamentos", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_WEDDING },
+      { slug: "cha-revelacao", label: "Chá revelação", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: ICONS["Chá revelação"] },
+      { slug: "formaturas", label: "Formaturas", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_GRAD },
+      { slug: "corporativo", label: "Eventos corporativos", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_CORP },
+      { slug: "confraternizacoes", label: "Confraternizações", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_TOAST },
+    ];
+
+    const galleryGrid = document.getElementById('galleryGrid');
+    GALLERY_ITEMS.forEach(g => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+      card.innerHTML = `
+    <div class="gallery-photo">
+      <img class="img-slot-photo" src="fotos/galeria-${g.slug}.jpg" alt="${g.label} — JD Eventos" loading="lazy"
+           onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+           onerror="this.style.display='none';">
+      <div class="img-slot-fallback">
+        ${g.icon}
+        <span class="img-slot-tag">📷 fotos/galeria-${g.slug}.jpg</span>
+      </div>
+    </div>
+    <div class="gallery-cap">
+      <h4>${g.label}</h4>
+      <p>${g.desc}</p>
+    </div>
+  `;
+      galleryGrid.appendChild(card);
+    });
+
+    /* ---------------- CART / SELECTED ITEMS ---------------- */
+    const selItems = document.getElementById('selItems');
+    const cartCount = document.getElementById('cartCount');
+    const catalogFootCount = document.getElementById('catalogFootCount');
+    const teaserCartCount = document.getElementById('teaserCartCount');
+
+    function renderCart() {
+      const ids = Object.keys(cart);
+      const totalQty = ids.reduce((sum, id) => sum + cart[id].qty, 0);
+      cartCount.textContent = totalQty;
+      catalogFootCount.textContent = totalQty;
+      teaserCartCount.textContent = totalQty;
+
+      if (ids.length === 0) {
+        selItems.innerHTML = '<p class="empty-msg">Sua lista está vazia. Adicione itens do catálogo para começar.</p>';
+      } else {
+        selItems.innerHTML = '';
+        ids.forEach(id => {
+          const it = cart[id];
+          const row = document.createElement('div');
+          row.className = 'sel-item';
+          const priceLabel = it.price == null ? 'sob consulta' : `R$ ${(it.price * it.qty).toFixed(2).replace('.', ',')}`;
+          row.innerHTML = `
+        <div>
+          <div class="di-cat">${it.category}</div>
+          <div class="di-name">${it.name} × ${it.qty} <span style="color:var(--tinta-suave);font-weight:400;">— ${priceLabel}</span></div>
+          <button class="di-remove" data-id="${id}">remover</button>
+        </div>
+      `;
+          selItems.appendChild(row);
+        });
+        selItems.querySelectorAll('.di-remove').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            delete cart[e.target.dataset.id];
+            renderCart();
+          });
+        });
+      }
+      renderInvitePreview();
+    }
+
+    /* ---------------- MODALS ---------------- */
+    const catalogOverlay = document.getElementById('catalogOverlay');
+    const orderOverlay = document.getElementById('orderOverlay');
+    const calcOverlay = document.getElementById('calcOverlay');
+    const kitsOverlay = document.getElementById('kitsOverlay');
+    const itemDetailOverlay = document.getElementById('itemDetailOverlay');
+    const kitDetailOverlay = document.getElementById('kitDetailOverlay');
+
+    function openModal(overlayEl) {
+      [catalogOverlay, orderOverlay, authOverlay, ordersOverlay, calcOverlay, kitsOverlay, itemDetailOverlay, kitDetailOverlay].forEach(o => o.classList.remove('open'));
+      overlayEl.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(overlayEl) {
+      overlayEl.classList.remove('open');
+      const anyOpen = [catalogOverlay, orderOverlay, authOverlay, ordersOverlay, calcOverlay, kitsOverlay, itemDetailOverlay, kitDetailOverlay].some(o => o.classList.contains('open'));
+      if (!anyOpen) {
+        document.body.style.overflow = '';
+      }
+    }
+    /* Os pop-ups de detalhe (produto/kit) ficam EMPILHADOS por cima do
+       catálogo/kits, em vez de fechar tudo — assim a cliente volta a
+       navegar de onde parou ao fechar o detalhe. */
+    function openStackedModal(overlayEl) {
+      overlayEl.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeStackedModal(overlayEl) {
+      overlayEl.classList.remove('open');
+    }
+    function openCatalogModal() { openModal(catalogOverlay); }
+    function closeCatalogModal() { closeModal(catalogOverlay); }
+    function openOrderModal() { openModal(orderOverlay); renderInvitePreview(); renderOrderAccountArea(); }
+    function closeOrderModal() { closeModal(orderOverlay); }
+    function openCalcModal() { openModal(calcOverlay); }
+    function closeCalcModal() { closeModal(calcOverlay); }
+    function openKitsModal() { openModal(kitsOverlay); }
+    function closeKitsModal() { closeModal(kitsOverlay); }
+
+    document.getElementById('heroCatalogo').addEventListener('click', openCatalogModal);
+    document.getElementById('navCatalogo').addEventListener('click', openCatalogModal);
+    document.getElementById('openCatalogBtn').addEventListener('click', openCatalogModal);
+    document.getElementById('catalogCloseBtn').addEventListener('click', closeCatalogModal);
+    catalogOverlay.addEventListener('click', (e) => { if (e.target === catalogOverlay) closeCatalogModal(); });
+
+    document.getElementById('heroPedido').addEventListener('click', openOrderModal);
+    document.getElementById('navPedido').addEventListener('click', openOrderModal);
+    document.getElementById('openOrderBtn').addEventListener('click', openOrderModal);
+    document.getElementById('cartOpenBtn').addEventListener('click', openOrderModal);
+    document.getElementById('orderCloseBtn').addEventListener('click', closeOrderModal);
+    orderOverlay.addEventListener('click', (e) => { if (e.target === orderOverlay) closeOrderModal(); });
+
+    document.getElementById('navCalc').addEventListener('click', openCalcModal);
+    document.getElementById('openCalcBtn').addEventListener('click', openCalcModal);
+    document.getElementById('calcCloseBtn').addEventListener('click', closeCalcModal);
+    calcOverlay.addEventListener('click', (e) => { if (e.target === calcOverlay) closeCalcModal(); });
+
+    document.getElementById('navKits').addEventListener('click', openKitsModal);
+    document.getElementById('openKitsBtn').addEventListener('click', openKitsModal);
+    document.getElementById('kitsCloseBtn').addEventListener('click', closeKitsModal);
+    kitsOverlay.addEventListener('click', (e) => { if (e.target === kitsOverlay) closeKitsModal(); });
+
+    document.getElementById('detailCloseBtn').addEventListener('click', () => closeStackedModal(itemDetailOverlay));
+    itemDetailOverlay.addEventListener('click', (e) => { if (e.target === itemDetailOverlay) closeStackedModal(itemDetailOverlay); });
+
+    document.getElementById('kitDetailCloseBtn').addEventListener('click', () => closeStackedModal(kitDetailOverlay));
+    kitDetailOverlay.addEventListener('click', (e) => { if (e.target === kitDetailOverlay) closeStackedModal(kitDetailOverlay); });
+
+    document.getElementById('catalogToOrderBtn').addEventListener('click', () => { closeCatalogModal(); openOrderModal(); });
+    document.getElementById('addMoreBtn').addEventListener('click', () => { closeOrderModal(); openCatalogModal(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (itemDetailOverlay.classList.contains('open')) { closeStackedModal(itemDetailOverlay); return; }
+        if (kitDetailOverlay.classList.contains('open')) { closeStackedModal(kitDetailOverlay); return; }
+        if (catalogOverlay.classList.contains('open')) closeCatalogModal();
+        if (orderOverlay.classList.contains('open')) closeOrderModal();
+        if (authOverlay.classList.contains('open')) closeAuthModal();
+        if (ordersOverlay.classList.contains('open')) closeModal(ordersOverlay);
+        if (calcOverlay.classList.contains('open')) closeCalcModal();
+        if (kitsOverlay.classList.contains('open')) closeKitsModal();
+        if (navDropdown.classList.contains('open')) toggleNavMenu(false);
+      }
+    });
+
+    /* ---------------- KITS PRONTOS ---------------- */
+    /* Combos com quantidades sugeridas. São pontos de partida — a cliente
+       ajusta tudo dentro do pedido antes de enviar. */
+    const KITS = [
+      {
+        id: "kit-aniversario-30",
+        name: "Kit Aniversário — até 30 convidados",
+        tag: "Aniversário",
+        desc: "Cadeiras, mesas, toalha, louças e copos para uma festa de aniversário simples.",
+        items: [
+          { id: "cad-plastico", qty: 30 },
+          { id: "tampo-6pessoas", qty: 4 },
+          { id: "suporte-tampo", qty: 4 },
+          { id: "toalha-lisa", qty: 4 },
+          { id: "prato-mesa", qty: 30 },
+          { id: "prato-sobremesa", qty: 30 },
+          { id: "talheres", qty: 30 },
+          { id: "guardanapos", qty: 30 },
+          { id: "copo-cylinder", qty: 30 },
+        ]
+      },
+      {
+        id: "kit-aniversario-50",
+        name: "Kit Aniversário — até 50 convidados",
+        tag: "Aniversário",
+        desc: "A mesma estrutura do kit menor, em maior quantidade, com balde de gelo e bandeja de garçom.",
+        items: [
+          { id: "cad-plastico", qty: 50 },
+          { id: "tampo-6pessoas", qty: 7 },
+          { id: "suporte-tampo", qty: 7 },
+          { id: "toalha-jacquard", qty: 7 },
+          { id: "prato-mesa", qty: 50 },
+          { id: "prato-sobremesa", qty: 50 },
+          { id: "talheres", qty: 50 },
+          { id: "guardanapos", qty: 50 },
+          { id: "copo-cylinder", qty: 50 },
+          { id: "balde-gelo", qty: 2 },
+          { id: "bandeja-garcom", qty: 2 },
+        ]
+      },
+      {
+        id: "kit-casamento-80",
+        name: "Kit Casamento — até 80 convidados",
+        tag: "Casamento",
+        desc: "Um combo mais completo, com cadeira de ferro, louça trabalhada e taças.",
+        items: [
+          { id: "cad-ferro", qty: 80 },
+          { id: "tampo-6pessoas", qty: 10 },
+          { id: "suporte-tampo", qty: 10 },
+          { id: "toalha-jacquard", qty: 10 },
+          { id: "capa-cadeira", qty: 80 },
+          { id: "prato-trabalhado", qty: 80 },
+          { id: "prato-sobremesa", qty: 80 },
+          { id: "talheres", qty: 80 },
+          { id: "guardanapos", qty: 80 },
+          { id: "taca-paulista", qty: 80 },
+          { id: "suqueira-3l", qty: 4 },
+          { id: "bandeja-garcom", qty: 3 },
+        ]
+      },
+      {
+        id: "kit-cha-revelacao",
+        name: "Kit Chá Revelação",
+        tag: "Chá revelação",
+        desc: "Estrutura para um chá revelação com até 20 convidados, incluindo o lança papel.",
+        items: [
+          { id: "cad-plastico", qty: 20 },
+          { id: "toalha-redonda", qty: 3 },
+          { id: "prato-sobremesa", qty: 20 },
+          { id: "talheres", qty: 20 },
+          { id: "guardanapos", qty: 20 },
+          { id: "copo-cylinder", qty: 20 },
+          { id: "suqueira-3l", qty: 2 },
+          { id: "boleira-lirio", qty: 1 },
+          { id: "lanca-papel", qty: 1 },
+        ]
+      },
+      {
+        id: "kit-casamento-40",
+        name: "Kit Casamento Simples — até 40 convidados",
+        tag: "Casamento",
+        desc: "Uma versão mais enxuta do kit de casamento, para cerimônias menores.",
+        items: [
+          { id: "cad-ferro", qty: 40 },
+          { id: "tampo-6pessoas", qty: 5 },
+          { id: "suporte-tampo", qty: 5 },
+          { id: "toalha-jacquard", qty: 5 },
+          { id: "capa-cadeira", qty: 40 },
+          { id: "prato-trabalhado", qty: 40 },
+          { id: "prato-sobremesa", qty: 40 },
+          { id: "talheres", qty: 40 },
+          { id: "guardanapos", qty: 40 },
+          { id: "taca-paulista", qty: 40 },
+          { id: "suqueira-3l", qty: 2 },
+        ]
+      },
+      {
+        id: "kit-formatura-60",
+        name: "Kit Formatura — até 60 convidados",
+        tag: "Formatura",
+        desc: "Jantar de formatura com cadeira de ferro, louça trabalhada e taças.",
+        items: [
+          { id: "cad-ferro", qty: 60 },
+          { id: "tampo-6pessoas", qty: 8 },
+          { id: "suporte-tampo", qty: 8 },
+          { id: "toalha-jacquard", qty: 8 },
+          { id: "prato-trabalhado", qty: 60 },
+          { id: "prato-sobremesa", qty: 60 },
+          { id: "talheres", qty: 60 },
+          { id: "guardanapos", qty: 60 },
+          { id: "taca-diamante", qty: 60 },
+          { id: "suqueira-5l", qty: 2 },
+          { id: "bandeja-garcom", qty: 2 },
+        ]
+      },
+      {
+        id: "kit-corporativo-40",
+        name: "Kit Confraternização Corporativa — até 40 pessoas",
+        tag: "Evento corporativo",
+        desc: "Formato coquetel, com mesas de apoio, réchaud e copos para brinde.",
+        items: [
+          { id: "mesa-pranchao", qty: 3 },
+          { id: "toalha-pranchao", qty: 3 },
+          { id: "copo-coquetel", qty: 40 },
+          { id: "taca-gallant", qty: 40 },
+          { id: "prato-sobremesa", qty: 40 },
+          { id: "guardanapos", qty: 40 },
+          { id: "rechaud-mesa", qty: 2 },
+          { id: "balde-gelo", qty: 2 },
+          { id: "garrafa-19", qty: 2 },
+        ]
+      },
+      {
+        id: "kit-aniversario-infantil-25",
+        name: "Kit Aniversário Infantil — até 25 crianças",
+        tag: "Aniversário infantil",
+        desc: "Mesa de doces e estrutura leve para uma festa infantil colorida.",
+        items: [
+          { id: "cad-plastico", qty: 25 },
+          { id: "toalha-colorida", qty: 3 },
+          { id: "prato-sobremesa", qty: 25 },
+          { id: "guardanapos", qty: 25 },
+          { id: "copo-coquetel", qty: 25 },
+          { id: "boleira-doceira-escada", qty: 1 },
+          { id: "bandeja-doces-acrilico", qty: 2 },
+          { id: "travessa-oval", qty: 2 },
+        ]
+      },
+    ];
+
+    const KIT_ICON_MAP = {
+      "Aniversário": GALLERY_ICON_BDAY,
+      "Aniversário infantil": GALLERY_ICON_BDAY,
+      "Casamento": GALLERY_ICON_WEDDING,
+      "Chá revelação": ICONS["Chá revelação"],
+      "Formatura": GALLERY_ICON_GRAD,
+      "Evento corporativo": GALLERY_ICON_CORP,
+    };
+
+    const kitsGrid = document.getElementById('kitsGrid');
+    KITS.forEach(kit => {
+      let subtotal = 0;
+      let hasConsulta = false;
+      kit.items.forEach(entry => {
+        const item = CATALOG_FLAT[entry.id];
+        if (!item) return;
+        if (item.price == null) hasConsulta = true; else subtotal += item.price * entry.qty;
+      });
+      const card = document.createElement('div');
+      card.className = 'kit-card';
+      const itemsListHtml = kit.items.map(entry => {
+        const item = CATALOG_FLAT[entry.id];
+        return item ? `<li>${item.name} × ${entry.qty}</li>` : '';
+      }).join('');
+      card.innerHTML = `
+    <div class="kit-img">
+      <img class="img-slot-photo" src="fotos/${kit.id}.jpg" alt="${kit.name}" loading="lazy"
+           onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+           onerror="this.style.display='none';">
+      <div class="img-slot-fallback">
+        ${KIT_ICON_MAP[kit.tag] || ''}
+        <span class="img-slot-tag">📷 fotos/${kit.id}.jpg</span>
+      </div>
+    </div>
+    <span class="kit-tag">${kit.tag}</span>
+    <h4>${kit.name}</h4>
+    <p class="kit-desc">${kit.desc}</p>
+    <details>
+      <summary style="cursor:pointer;font-size:12.5px;color:var(--verde);">Ver itens do kit (${kit.items.length})</summary>
+      <ul style="margin:10px 0 0;padding-left:18px;font-size:12.5px;color:var(--tinta-suave);line-height:1.7;">${itemsListHtml}</ul>
+    </details>
+    <div class="price-row">
+      <span class="price">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+      ${hasConsulta ? '<span class="price-old" style="text-decoration:none;">+ itens sob consulta</span>' : ''}
+    </div>
+    <button type="button" class="btn btn-verde add-kit-btn" style="justify-content:center;">Adicionar kit ao meu evento</button>
+  `;
+      card.querySelector('.add-kit-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        kit.items.forEach(entry => {
+          const item = CATALOG_FLAT[entry.id];
+          if (!item) return;
+          cart[entry.id] = { name: item.name, category: item.category, qty: entry.qty, price: item.price };
+        });
+        renderCart();
+        showToast(`${kit.name} adicionado ao seu evento!`);
+        closeKitsModal();
+        openOrderModal();
+      });
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.add-kit-btn') || e.target.closest('details')) return;
+        openKitDetail(kit);
+      });
+      kitsGrid.appendChild(card);
+    });
+
+    /* ---------------- CALCULADORA DE EVENTO ---------------- */
+    /* Regra simples: qty = ceil(convidados / perGuests). Estimativa inicial,
+       pensada para ser ajustada pela cliente antes de adicionar ao pedido. */
+    const CALC_ITEMS = [
+      { id: "cad-plastico", perGuests: 1 },
+      { id: "tampo-6pessoas", perGuests: 8 },
+      { id: "suporte-tampo", perGuests: 8 },
+      { id: "toalha-lisa", perGuests: 8 },
+      { id: "prato-mesa", perGuests: 1 },
+      { id: "prato-sobremesa", perGuests: 1 },
+      { id: "talheres", perGuests: 1 },
+      { id: "guardanapos", perGuests: 1 },
+      { id: "copo-cylinder", perGuests: 1 },
+      { id: "balde-gelo", perGuests: 25 },
+      { id: "suqueira-3l", perGuests: 20 },
+      { id: "bandeja-garcom", perGuests: 30 },
+    ];
+
+    const calcResultsWrap = document.getElementById('calcResultsWrap');
+    const calcResults = document.getElementById('calcResults');
+
+    function runCalc() {
+      const guests = parseInt(document.getElementById('calc-convidados').value || 0);
+      if (!guests || guests < 1) {
+        showToast('Informe o número de convidados para calcular.');
+        return;
+      }
+      calcResults.innerHTML = '';
+      CALC_ITEMS.forEach(entry => {
+        const item = CATALOG_FLAT[entry.id];
+        if (!item) return;
+        const suggestedQty = Math.ceil(guests / entry.perGuests);
+        const row = document.createElement('div');
+        row.className = 'calc-row';
+        row.dataset.id = entry.id;
+        const priceLabel = item.price == null ? 'sob consulta' : `R$ ${item.price.toFixed(2).replace('.', ',')}/un.`;
+        row.innerHTML = `
+      <div>
+        <div class="di-cat">${item.category}</div>
+        <div class="di-name">${item.name}</div>
+        <div class="calc-note">sugestão: ${suggestedQty} un. · ${priceLabel}</div>
+      </div>
+      <div class="calc-row-actions">
+        <div class="stepper">
+          <button type="button" class="dec" aria-label="Diminuir">–</button>
+          <input type="number" min="1" value="${suggestedQty}" aria-label="Quantidade">
+          <button type="button" class="inc" aria-label="Aumentar">+</button>
+        </div>
+        <button type="button" class="add-btn">Adicionar</button>
+      </div>
+    `;
+        const qtyInput = row.querySelector('input');
+        row.querySelector('.dec').addEventListener('click', () => {
+          qtyInput.value = Math.max(1, parseInt(qtyInput.value || 1) - 1);
+        });
+        row.querySelector('.inc').addEventListener('click', () => {
+          qtyInput.value = parseInt(qtyInput.value || 1) + 1;
+        });
+        row.querySelector('.add-btn').addEventListener('click', (e) => {
+          const qty = Math.max(1, parseInt(qtyInput.value || 1));
+          cart[entry.id] = { name: item.name, category: item.category, qty, price: item.price };
+          renderCart();
+          showToast(`${item.name} adicionado ao seu evento`);
+          row.classList.add('added');
+          e.target.textContent = 'Adicionado ✓';
+          setTimeout(() => { e.target.textContent = 'Adicionar'; row.classList.remove('added'); }, 1400);
+        });
+        calcResults.appendChild(row);
+      });
+      calcResultsWrap.style.display = 'block';
+    }
+
+    document.getElementById('calcRunBtn').addEventListener('click', runCalc);
+    document.getElementById('calc-convidados').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); runCalc(); }
+    });
+
+    document.getElementById('calcAddAllBtn').addEventListener('click', () => {
+      const rows = calcResults.querySelectorAll('.calc-row');
+      if (rows.length === 0) {
+        showToast('Calcule a sugestão primeiro.');
+        return;
+      }
+      rows.forEach(row => {
+        const id = row.dataset.id;
+        const item = CATALOG_FLAT[id];
+        const qty = Math.max(1, parseInt(row.querySelector('input').value || 1));
+        cart[id] = { name: item.name, category: item.category, qty, price: item.price };
+      });
+      renderCart();
+      showToast('Itens sugeridos adicionados ao seu evento!');
+      closeCalcModal();
+      openOrderModal();
+    });
+
+
+    let toastTimer;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 5000);
+    }
+
+    /* ---------------- LIVE INVITE PREVIEW ---------------- */
+    const pvNome = document.getElementById('pvNome');
+    const pvDetalhes = document.getElementById('pvDetalhes');
+    const pvList = document.getElementById('pvList');
+    const pvTotal = document.getElementById('pvTotal');
+    const pvTotalCount = document.getElementById('pvTotalCount');
+    const pvSubtotal = document.getElementById('pvSubtotal');
+    const pvSubtotalValue = document.getElementById('pvSubtotalValue');
+
+    function renderInvitePreview() {
+      const nome = document.getElementById('f-nome').value.trim();
+      const data = document.getElementById('f-data').value;
+      const convidados = document.getElementById('f-convidados').value;
+      const endereco = document.getElementById('f-endereco').value.trim();
+
+      pvNome.textContent = nome ? `Evento de ${nome}` : 'Seu nome aqui';
+
+      const detalhesParts = [];
+      if (data) {
+        const d = new Date(data + 'T00:00:00');
+        detalhesParts.push(d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }));
+      }
+      if (convidados) detalhesParts.push(`${convidados} convidados`);
+      if (endereco) detalhesParts.push(endereco);
+      pvDetalhes.textContent = detalhesParts.length ? detalhesParts.join(' · ') : 'Data · convidados · endereço';
+
+      const ids = Object.keys(cart);
+      if (ids.length === 0) {
+        pvList.innerHTML = '<li class="invite-empty" style="list-style:none;">Nenhum item selecionado ainda. Volte ao catálogo e escolha os itens do seu evento.</li>';
+        pvTotal.style.display = 'none';
+        pvSubtotal.style.display = 'none';
+      } else {
+        pvList.innerHTML = '';
+        let totalItens = 0;
+        let subtotal = 0;
+        let hasConsulta = false;
+        ids.forEach(id => {
+          const it = cart[id];
+          totalItens += it.qty;
+          const li = document.createElement('li');
+          if (it.price == null) {
+            hasConsulta = true;
+            li.innerHTML = `<span>${it.name}</span><span>× ${it.qty} (sob consulta)</span>`;
+          } else {
+            subtotal += it.price * it.qty;
+            li.innerHTML = `<span>${it.name}</span><span>× ${it.qty}</span>`;
+          }
+          pvList.appendChild(li);
+        });
+        pvTotal.style.display = 'flex';
+        pvTotalCount.textContent = totalItens;
+        pvSubtotal.style.display = 'flex';
+        pvSubtotalValue.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}${hasConsulta ? ' + itens sob consulta' : ''}`;
+      }
+    }
+    ['f-nome', 'f-data', 'f-convidados', 'f-endereco'].forEach(id => {
+      document.getElementById(id).addEventListener('input', renderInvitePreview);
+    });
+
+    /* ---------------- ORDER SUMMARY TEXT ---------------- */
+    function buildSummaryText() {
+      const nome = document.getElementById('f-nome').value.trim();
+      const telefone = document.getElementById('f-telefone').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const tipo = document.getElementById('f-tipo').value;
+      const convidados = document.getElementById('f-convidados').value;
+      const data = document.getElementById('f-data').value;
+      const horario = document.getElementById('f-horario').value;
+      const endereco = document.getElementById('f-endereco').value.trim();
+      const obs = document.getElementById('f-obs').value.trim();
+
+      let dataFmt = data;
+      if (data) {
+        const d = new Date(data + 'T00:00:00');
+        dataFmt = d.toLocaleDateString('pt-BR');
+      }
+
+      let lines = [];
+      lines.push('Olá! Gostaria de solicitar um orçamento para o meu evento na JD Eventos.');
+      lines.push('');
+      lines.push(`Nome: ${nome}`);
+      lines.push(`Telefone: ${telefone}`);
+      if (email) lines.push(`E-mail: ${email}`);
+      lines.push(`Tipo de evento: ${tipo}`);
+      if (convidados) lines.push(`Nº de convidados: ${convidados}`);
+      if (data) lines.push(`Data: ${dataFmt}${horario ? ' às ' + horario : ''}`);
+      if (endereco) lines.push(`Endereço: ${endereco}`);
+      lines.push('');
+      lines.push('Itens do meu evento:');
+      const ids = Object.keys(cart);
+      let subtotal = 0;
+      let hasConsulta = false;
+      if (ids.length === 0) {
+        lines.push('- (nenhum item selecionado ainda)');
+      } else {
+        ids.forEach(id => {
+          const it = cart[id];
+          if (it.price == null) {
+            hasConsulta = true;
+            lines.push(`- ${it.name} (x${it.qty}) — sob consulta`);
+          } else {
+            subtotal += it.price * it.qty;
+            lines.push(`- ${it.name} (x${it.qty}) — R$ ${(it.price * it.qty).toFixed(2).replace('.', ',')}`);
+          }
+        });
+        lines.push('');
+        lines.push(`Subtotal aproximado: R$ ${subtotal.toFixed(2).replace('.', ',')}${hasConsulta ? ' + itens sob consulta' : ''}`);
+      }
+      if (obs) {
+        lines.push('');
+        lines.push(`Observações: ${obs}`);
+      }
+      return lines.join('\n');
+    }
+
+    /* ---------------- FORM SUBMIT ---------------- */
+    const WHATSAPP_NUMBER = "5511998187321";
+    const CONTACT_EMAIL = "jd.contatos@outlook.com";
+
+    const orderForm = document.getElementById('orderForm');
+    const confirmBox = document.getElementById('confirmBox');
+    const confirmText = document.getElementById('confirmText');
+
+    function handleSend(channel) {
+      if (!orderForm.reportValidity()) return;
+      if (!currentUser()) {
+        showToast('Faça login ou cadastre-se para concluir o pedido.');
+        openAuthModal('login');
+        return;
+      }
+      const text = buildSummaryText();
+      saveOrderToHistory();
+
+      if (channel === 'whatsapp') {
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+        confirmText.textContent = 'Abrimos o WhatsApp com o resumo do seu evento já preenchido. É só conferir e apertar enviar. Este pedido foi fechado e já está salvo em "Meus pedidos".';
+      } else {
+        const subject = encodeURIComponent('Pedido de orçamento — JD Eventos');
+        const url = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${encodeURIComponent(text)}`;
+        window.location.href = url;
+        confirmText.textContent = 'Abrimos seu aplicativo de e-mail com o resumo do seu evento já preenchido. É só conferir e enviar. Este pedido foi fechado e já está salvo em "Meus pedidos".';
+      }
+
+      // fecha o pedido: esvazia o carrinho e reseta os campos do evento
+      cart = {};
+      renderCart();
+      document.getElementById('f-tipo').selectedIndex = 0;
+      document.getElementById('f-convidados').value = '';
+      document.getElementById('f-data').value = '';
+      document.getElementById('f-horario').value = '';
+      document.getElementById('f-endereco').value = '';
+      document.getElementById('f-obs').value = '';
+      renderInvitePreview();
+
+      orderForm.style.display = 'none';
+      confirmBox.classList.add('show');
+    }
+
+    orderForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleSend('whatsapp');
+    });
+    document.getElementById('sendEmail').addEventListener('click', () => handleSend('email'));
+    document.getElementById('viewHistoryAfterSend').addEventListener('click', () => {
+      confirmBox.classList.remove('show');
+      orderForm.style.display = 'block';
+      closeOrderModal();
+      openOrdersHistoryModal();
+    });
+    document.getElementById('newOrderAfterSend').addEventListener('click', () => {
+      confirmBox.classList.remove('show');
+      orderForm.style.display = 'block';
+      renderInvitePreview();
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderCart();
+    renderAccountState();
+  </script>
+</body>
+
+</html>
