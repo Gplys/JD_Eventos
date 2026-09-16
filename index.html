@@ -23,7 +23,6 @@
       --branco: #FFFFFF;
       --linha: rgba(59, 15, 22, 0.14);
       --sombra: 0 20px 45px -20px rgba(59, 15, 22, 0.35);
-      /* fundo de página/superfícies e cor de destaque — variam no modo escuro */
       --page-bg: var(--marfim);
       --panel-bg: var(--marfim-2);
       --accent-text: var(--bordo);
@@ -603,7 +602,6 @@
       margin: 0;
     }
 
-    /* teaser sections that open modals */
     .teaser-icons {
       display: flex;
       justify-content: center;
@@ -1102,7 +1100,6 @@
       z-index: 2;
     }
 
-    /* category label */
     .course-label {
       display: flex;
       align-items: center;
@@ -2167,8 +2164,6 @@
     }
   </style>
   <script>
-    /* Aplica o tema salvo antes da página desenhar, para não piscar
-       claro->escuro na primeira renderização. */
     (function () {
       try {
         var saved = localStorage.getItem('jdeventos_theme');
@@ -2183,28 +2178,6 @@
 </head>
 
 <body>
-  <!--
-  ================================================================
-  COMO COLOCAR AS FOTOS NO SITE (leia isso primeiro!)
-  ================================================================
-  Você NÃO precisa mexer em nenhum código. Basta:
-
-  1) Criar uma pasta chamada "fotos" bem do lado deste arquivo
-     index.html (mesmo lugar, mesma pasta).
-
-  2) Salvar cada foto dentro dessa pasta usando o nome EXATO que
-     aparece numa etiquetinha cinza "📷 fotos/nome-do-arquivo.jpg"
-     em cada espaço reservado do site (produtos do catálogo, kits
-     prontos, galeria de eventos e a foto de fundo da capa).
-
-  3) Pronto! Assim que o arquivo com o nome certo estiver na pasta
-     "fotos", a foto aparece sozinha no lugar do ícone/desenho —
-     não precisa avisar ninguém nem editar mais nada.
-
-  Dica: use fotos na horizontal (paisagem) e não muito pesadas
-  (até 1-2MB cada) para o site carregar rápido.
-  ================================================================
--->
   <a href="#catalogo" class="skip-link">Pular para o catálogo</a>
 
   <!-- ===================== COVER ===================== -->
@@ -2293,12 +2266,6 @@
   </nav>
 
   <!-- ===================== SOBRE ===================== -->
-  <!--
-  PARA A JD EVENTOS: o texto abaixo é um rascunho inicial, escrito sem
-  saber a história real da empresa. Me conte como e quando começou,
-  o que te motivou e qualquer detalhe pessoal que queira destacar, que
-  eu reescrevo com as informações certas.
--->
   <section class="sobre" id="sobre">
     <div class="container">
       <div class="sobre-grid">
@@ -2434,23 +2401,11 @@
         <div class="rule"></div>
         <p>Um retrato do tipo de festa que a JD Eventos ajuda a montar.</p>
       </div>
-      <!--
-      PARA A JD EVENTOS: não precisa mexer em código para colocar fotos aqui!
-      Basta criar uma pasta chamada "fotos" do lado deste arquivo index.html
-      e salvar cada foto com o nome exato mostrado na etiqueta 📷 do site
-      (ex: fotos/galeria-casamentos.jpg). A foto substitui o ícone sozinha.
-    -->
       <div class="gallery-grid" id="galleryGrid"></div>
     </div>
   </section>
 
   <!-- ===================== FAQ ===================== -->
-  <!--
-  PARA A JD EVENTOS: as respostas abaixo são um rascunho — escrevi de
-  forma genérica porque não sei seus prazos e políticas exatas de
-  reserva, cancelamento e danos. Me manda as informações reais que eu
-  atualizo os textos certinho.
--->
   <section class="how" id="faq">
     <div class="container">
       <div class="section-head">
@@ -2901,7 +2856,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    /* ---------------- ICONS (line-art, elegant placeholders) ---------------- */
+    /* ---------------- ICONS ---------------- */
     const ICONS = {
       "Mobiliário": `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 9 L21 29 Q21 33 25 33 L39 33 Q43 33 43 29 L43 9" />
@@ -3042,51 +2997,104 @@
 
     const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
-    /* Lookup rápido de qualquer item do catálogo pelo id, usado pela calculadora */
     const CATALOG_FLAT = {};
     CATALOG.forEach(group => {
       group.items.forEach(item => { CATALOG_FLAT[item.id] = { ...item, category: group.category }; });
     });
 
     /* =====================================================================
-       📷 MAPA DE FOTOS DO SITE — PREENCHA AQUI PARA ADICIONAR IMAGENS
+       📷 MAPA DE FOTOS DO SITE
        =====================================================================
-       Para cada linha abaixo, troque "null" pelo caminho do arquivo da foto.
-       Exemplo:
-           "cad-plastico": null,               <- sem foto (mostra ícone)
-           "cad-plastico": "fotos/cadeira-plastico.jpg",   <- com foto
-    
-       1) Crie uma pasta chamada "fotos" na mesma pasta onde está este
-          arquivo index.html.
-       2) Coloque as fotos dentro dela (formato .jpg ou .png).
-       3) Escreva o nome do arquivo aqui, entre aspas, no lugar de "null".
-       4) Salve o arquivo. Pronto — a foto substitui o ícone automaticamente.
-    
-       Dica: use Ctrl+F (ou Cmd+F no Mac) e procure por "null" neste bloco
-       para pular rapidamente de item em item.
+       Basta colocar os arquivos dentro da pasta "fotos" com o nome exato
+       indicado abaixo. Se um arquivo não for encontrado, o ícone/desenho
+       aparece no lugar automaticamente.
        ===================================================================== */
+    const PRODUCT_IMAGES = {
+      /* Mobiliário */
+      "cad-plastico": "cad-plastico.jpg",
+      "cad-ferro": "cad-ferro.jpg",
+      "mesa-plastico": "Mesa-plastico.jpg",
+      "mesa-pranchao": "Mesa-pranchao.jpg",
+      "tampo-6pessoas": "Tampo-mesa-6-a-8.jpg",
+      "tampo-115": "Tampo-mesa-115cm.jpg",
+      "suporte-tampo": "Suporte-tampo.png",
 
-    /* ---- Fotos de cada produto do catálogo (uma linha por item) ---- */
-    const PRODUCT_IMAGES = {};
-    CATALOG.forEach(group => {
-      group.items.forEach(item => { PRODUCT_IMAGES[item.id] = null; });
-    });
+      /* Toalhas & Capas */
+      "toalha-lisa": "Toalha-tampo-lisa.jpg",
+      "toalha-jacquard": "Toalha-tampo-jacquard.jpg",
+      "toalha-oxford": "Toalha-tampo-Oxford.jpg",
+      "toalha-redonda": "Toalha-redonda-branca.jpg",
+      "toalha-colorida": "Toalha-tampo-colorida.jpg",
+      "toalha-quadrada": "Toalha-quadrada-145cm.jpg",
+      "toalha-pranchao": "Toalha-pranchao.jpg",
+      "toalha-cobre-mancha": "Toalha-p-tampo-cobre-mancha.jpg",
+      "capa-cadeira": "Capa-cadeira.jpg",
+      "guardanapos": "guardanapo.jpg",
+
+      /* Louças & Talheres */
+      "prato-mesa": "conjunto_pratos_mesa_refeicao.jpg",
+      "prato-sobremesa": "pratos_sobremesa_quadrado.jpg",
+      "prato-trabalhado": "prato_trabalhado.jpg",
+      "talheres": "talher_mesa_sobremesa.jpg",
+      "travessa-oval": "travessa_oval_grande.jpg",
+      "travessa-folha-p": "travessa_folha_P.jpg",
+      "travessa-vidro-folha": "travessa_folha_M.jpg",
+      "travessa-melamina": "Travessa-Melamina-Folha-.jpg",
+
+      /* Copos & Taças */
+      "taca-gallant": "taca_de_vidro_para_champanhe_gallant.jpg",
+      "taca-paulista": "taca_paulista.jpg",
+      "taca-diamante": "taca_de_agua_diamond.jpg",
+      "copo-coquetel": "copo_coquetel.jpg",
+      "copo-cylinder": "copo-long-drink-cylinder-300ml.jpg",
+      "copo-whisky": "copo-de-whisky-amassadinho-250ml.jpg",
+      "copo-chopp": "caneca_chopp_vidro.jpg",
+
+      /* Buffet & Serviço */
+      "rechaud-redondo": "rechaud_redondo.jpg",
+      "rechaud-mesa": "rechaud_de_aco_inox.jpg",
+      "suqueira-3l": "suqueira_vidro_3l.jpg",
+      "suqueira-5l": "suqueira_5l.jpg",
+      "suqueira-18l": "suqueira_2l.jpg",
+      "garrafa-19": "garrafa_termica_2l.jpg",
+      "botijao-termico": "botijao_termico_5l.jpg",
+      "balde-gelo": "balde_gelo.jpg",
+      "jarra-vidro": "jarra_vidro_1500ml.jpg",
+      "bandeja-garcom": "bandeja_garcom.jpg",
+      "utensilios-servir": "Utensílios_servir.jpg",
+
+      /* Doces & Decoração de mesa */
+      "boleira-espelhado": "kit_travessa_redonda_espelhada_boleira.jpg",
+      "boleira-doceira-escada": "kit_boleira_escada_doces.jpg",
+      "bandeja-doces-acrilico": "bandeja_doces_acrilico.jpg",
+      "boleira-lirio": "Boleira_Vidro_Lirio.jpg",
+      "boleira-flor": "boleira_flor.jpg",
+      "sousplast-ratan": "sousplast_rattan.jpg",
+
+      /* Chá revelação */
+      "lanca-papel": "lanca_papel.jpg",
+    };
 
     /* ---- Fotos da seção Galeria (uma por tipo de evento) ---- */
     const GALLERY_IMAGES = {
-      "Aniversários": null,
-      "Casamentos": null,
-      "Chá revelação": null,
-      "Formaturas": null,
-      "Eventos corporativos": null,
-      "Confraternizações": null,
+      "aniversarios": "aniversario.jpg",
+      "casamentos": "casamento.jpg",
+      "cha-revelacao": "cha-revelacao.jpg",
+      "formaturas": "Festa-Formatura.jpg",
+      "corporativo": "evento-corporativo.jpg",
+      "confraternizacoes": "confraternizacao.jpg",
     };
 
     /* ---- Foto de capa (topo do site, atrás do título) — opcional ---- */
     const HERO_IMAGE = null; // ex: "fotos/capa.jpg"
 
+    /* Helper: retorna o nome do arquivo de imagem (só o nome, sem "fotos/") */
+    function productImgFile(id) {
+      return PRODUCT_IMAGES[id] || (id + ".jpg");
+    }
+
     /* ---------------- STATE ---------------- */
-    let cart = {}; // id -> { name, category, qty, price }
+    let cart = {};
 
     /* ---------------- MODO ESCURO ---------------- */
     const THEME_KEY = 'jdeventos_theme';
@@ -3102,7 +3110,6 @@
       const isDark = document.documentElement.classList.contains('dark-mode');
       setTheme(!isDark);
     });
-    // sincroniza o rótulo do botão com o tema já aplicado no <head>
     setTheme(document.documentElement.classList.contains('dark-mode'));
 
     /* ---------------- MENU HAMBÚRGUER ---------------- */
@@ -3117,24 +3124,16 @@
       hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
     }
     hamburgerBtn.addEventListener('click', () => toggleNavMenu());
-    // fecha o menu ao escolher qualquer item dentro dele
     navDropdown.querySelectorAll('a, button').forEach(el => {
       el.addEventListener('click', () => toggleNavMenu(false));
     });
-    // fecha ao clicar fora do menu
     document.addEventListener('click', (e) => {
       if (navDropdown.classList.contains('open') && !navDropdown.contains(e.target) && !hamburgerBtn.contains(e.target)) {
         toggleNavMenu(false);
       }
     });
 
-    /* ---------------- AUTH / ACCOUNTS (armazenado neste navegador) ---------------- */
-    /* AVISO: isto é um cadastro simples salvo no localStorage do navegador do
-       cliente — ótimo para testar o fluxo, mas não é um banco de dados real:
-       cada pessoa só vê o próprio histórico no próprio aparelho/navegador, e
-       as senhas não ficam protegidas como em um sistema com servidor de verdade.
-       Para uma versão em produção, o ideal é migrar isso para um backend com
-       autenticação segura. */
+    /* ---------------- AUTH ---------------- */
     const USERS_KEY = 'jdeventos_users';
     const SESSION_KEY = 'jdeventos_session';
     const ORDERS_KEY = 'jdeventos_orders';
@@ -3196,7 +3195,6 @@
           renderAccountState();
           showToast('Você saiu da sua conta.');
         });
-        // pré-preenche os dados de contato com os da conta, se estiverem vazios
         const fNome = document.getElementById('f-nome');
         const fTelefone = document.getElementById('f-telefone');
         const fEmail = document.getElementById('f-email');
@@ -3215,7 +3213,6 @@
       }
     }
 
-    /* ---------------- AUTH MODAL ---------------- */
     const tabLogin = document.getElementById('tabLogin');
     const tabRegister = document.getElementById('tabRegister');
     const panelLogin = document.getElementById('panelLogin');
@@ -3293,7 +3290,7 @@
       showToast(`Conta criada! Bem-vindo(a), ${nome.split(' ')[0]}.`);
     });
 
-    /* ---------------- MEUS PEDIDOS (histórico) ---------------- */
+    /* ---------------- MEUS PEDIDOS ---------------- */
     function openOrdersHistoryModal() {
       const user = currentUser();
       const list = document.getElementById('ordersHistoryList');
@@ -3378,8 +3375,7 @@
       saveAllOrders(allOrders);
     }
 
-
-    /* ---------------- POP-UP DE DETALHES (produto e kit) ---------------- */
+    /* ---------------- DETALHES ---------------- */
     function openItemDetail(item, category) {
       document.getElementById('detailTitle').textContent = item.name;
       document.getElementById('detailCatTag').textContent = category;
@@ -3391,13 +3387,14 @@
       if (item.note) { noteEl.textContent = item.note; noteEl.style.display = 'block'; }
       else { noteEl.style.display = 'none'; }
       document.getElementById('detailDesc').textContent = item.desc;
+      const imgFile = productImgFile(item.id);
       document.getElementById('detailImgWrap').innerHTML = `
-    <img class="img-slot-photo" src="fotos/${item.id}.jpg" alt="${item.name}" loading="lazy"
+    <img class="img-slot-photo" src="fotos/${imgFile}" alt="${item.name}" loading="lazy"
          onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
          onerror="this.style.display='none';">
     <div class="img-slot-fallback">
       ${ICONS[category] || ''}
-      <span class="img-slot-tag">📷 fotos/${item.id}.jpg</span>
+      <span class="img-slot-tag">📷 fotos/${imgFile}</span>
     </div>
   `;
       const qtyInput = document.querySelector('#detailStepper input');
@@ -3481,14 +3478,15 @@
         const priceHtml = item.price == null
           ? `<span class="price consulta">Sob consulta</span>`
           : `${item.priceOld ? `<span class="price-old">R$ ${item.priceOld.toFixed(2).replace('.', ',')}</span>` : ''}<span class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>`;
+        const imgFile = productImgFile(item.id);
         card.innerHTML = `
       <div class="card-img">
-        <img class="img-slot-photo" src="fotos/${item.id}.jpg" alt="${item.name}" loading="lazy"
+        <img class="img-slot-photo" src="fotos/${imgFile}" alt="${item.name}" loading="lazy"
              onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
              onerror="this.style.display='none';">
         <div class="img-slot-fallback">
           ${ICONS[group.category] || ''}
-          <span class="img-slot-tag">📷 fotos/${item.id}.jpg</span>
+          <span class="img-slot-tag">📷 fotos/${imgFile}</span>
         </div>
       </div>
       <div class="card-top">
@@ -3533,7 +3531,7 @@
       productList.appendChild(grid);
     });
 
-    /* teaser icon row on the main page */
+    /* teaser icon row */
     const teaserIcons = document.getElementById('teaserIcons');
     CATALOG.forEach(group => {
       const el = document.createElement('div');
@@ -3543,7 +3541,7 @@
       teaserIcons.appendChild(el);
     });
 
-    /* ---------------- GALERIA (placeholders — trocar por fotos reais depois) ---------------- */
+    /* ---------------- GALERIA ---------------- */
     const GALLERY_ICON_BDAY = `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
   <path d="M14 30 h36 v20 a2 2 0 0 1-2 2 H16 a2 2 0 0 1-2-2 Z" />
   <path d="M14 38 q4 -4 8 0 q4 4 8 0 q4 -4 8 0 q4 4 8 0" />
@@ -3574,26 +3572,27 @@
 </svg>`;
 
     const GALLERY_ITEMS = [
-      { slug: "aniversarios", label: "Aniversários", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_BDAY },
-      { slug: "casamentos", label: "Casamentos", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_WEDDING },
-      { slug: "cha-revelacao", label: "Chá revelação", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: ICONS["Chá revelação"] },
-      { slug: "formaturas", label: "Formaturas", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_GRAD },
-      { slug: "corporativo", label: "Eventos corporativos", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_CORP },
-      { slug: "confraternizacoes", label: "Confraternizações", desc: "Foto em breve — em atualização com fotos reais dos eventos.", icon: GALLERY_ICON_TOAST },
+      { slug: "aniversarios", label: "Aniversários", desc: "Momentos especiais registrados nos eventos que montamos.", icon: GALLERY_ICON_BDAY },
+      { slug: "casamentos", label: "Casamentos", desc: "Mesas e detalhes que fizeram parte de casamentos por aqui.", icon: GALLERY_ICON_WEDDING },
+      { slug: "cha-revelacao", label: "Chá revelação", desc: "Decoração e estrutura para um chá revelação inesquecível.", icon: ICONS["Chá revelação"] },
+      { slug: "formaturas", label: "Formaturas", desc: "Jantares e celebrações de formatura montados pela JD.", icon: GALLERY_ICON_GRAD },
+      { slug: "corporativo", label: "Eventos corporativos", desc: "Confraternizações e eventos de empresas atendidos pela JD.", icon: GALLERY_ICON_CORP },
+      { slug: "confraternizacoes", label: "Confraternizações", desc: "Encontros entre amigos e famílias que passaram por aqui.", icon: GALLERY_ICON_TOAST },
     ];
 
     const galleryGrid = document.getElementById('galleryGrid');
     GALLERY_ITEMS.forEach(g => {
+      const imgFile = GALLERY_IMAGES[g.slug] || `galeria-${g.slug}.jpg`;
       const card = document.createElement('div');
       card.className = 'gallery-card';
       card.innerHTML = `
     <div class="gallery-photo">
-      <img class="img-slot-photo" src="fotos/galeria-${g.slug}.jpg" alt="${g.label} — JD Eventos" loading="lazy"
+      <img class="img-slot-photo" src="fotos/${imgFile}" alt="${g.label} — JD Eventos" loading="lazy"
            onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
            onerror="this.style.display='none';">
       <div class="img-slot-fallback">
         ${g.icon}
-        <span class="img-slot-tag">📷 fotos/galeria-${g.slug}.jpg</span>
+        <span class="img-slot-tag">📷 fotos/${imgFile}</span>
       </div>
     </div>
     <div class="gallery-cap">
@@ -3604,7 +3603,7 @@
       galleryGrid.appendChild(card);
     });
 
-    /* ---------------- CART / SELECTED ITEMS ---------------- */
+    /* ---------------- CART ---------------- */
     const selItems = document.getElementById('selItems');
     const cartCount = document.getElementById('cartCount');
     const catalogFootCount = document.getElementById('catalogFootCount');
@@ -3665,9 +3664,6 @@
         document.body.style.overflow = '';
       }
     }
-    /* Os pop-ups de detalhe (produto/kit) ficam EMPILHADOS por cima do
-       catálogo/kits, em vez de fechar tudo — assim a cliente volta a
-       navegar de onde parou ao fechar o detalhe. */
     function openStackedModal(overlayEl) {
       overlayEl.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -3731,8 +3727,6 @@
     });
 
     /* ---------------- KITS PRONTOS ---------------- */
-    /* Combos com quantidades sugeridas. São pontos de partida — a cliente
-       ajusta tudo dentro do pedido antes de enviar. */
     const KITS = [
       {
         id: "kit-aniversario-30",
@@ -3946,9 +3940,7 @@
       kitsGrid.appendChild(card);
     });
 
-    /* ---------------- CALCULADORA DE EVENTO ---------------- */
-    /* Regra simples: qty = ceil(convidados / perGuests). Estimativa inicial,
-       pensada para ser ajustada pela cliente antes de adicionar ao pedido. */
+    /* ---------------- CALCULADORA ---------------- */
     const CALC_ITEMS = [
       { id: "cad-plastico", perGuests: 1 },
       { id: "tampo-6pessoas", perGuests: 8 },
@@ -4041,7 +4033,6 @@
       openOrderModal();
     });
 
-
     let toastTimer;
     function showToast(msg) {
       const toast = document.getElementById('toast');
@@ -4051,7 +4042,7 @@
       toastTimer = setTimeout(() => toast.classList.remove('show'), 5000);
     }
 
-    /* ---------------- LIVE INVITE PREVIEW ---------------- */
+    /* ---------------- INVITE PREVIEW ---------------- */
     const pvNome = document.getElementById('pvNome');
     const pvDetalhes = document.getElementById('pvDetalhes');
     const pvList = document.getElementById('pvList');
@@ -4195,7 +4186,6 @@
         confirmText.textContent = 'Abrimos seu aplicativo de e-mail com o resumo do seu evento já preenchido. É só conferir e enviar. Este pedido foi fechado e já está salvo em "Meus pedidos".';
       }
 
-      // fecha o pedido: esvazia o carrinho e reseta os campos do evento
       cart = {};
       renderCart();
       document.getElementById('f-tipo').selectedIndex = 0;
